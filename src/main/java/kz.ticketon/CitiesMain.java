@@ -1,5 +1,5 @@
 package kz.ticketon;
 
-public enum Cities {
+public enum CitiesMain {
 
 }
