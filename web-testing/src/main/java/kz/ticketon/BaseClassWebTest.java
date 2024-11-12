@@ -1,7 +1,9 @@
 package kz.ticketon;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -25,8 +27,9 @@ public class BaseClassWebTest extends BaseClassTest {
 
     @Step("Загрузка стартовой страницы")
     public void openStartPage(final LanguagesMain language) {
-        open(BASIC_URL + language.getUrlString());
-        webdriver().shouldHave(url(BASIC_URL + language.getUrlString()));
+        String urlPage = BASIC_URL + language.getUrlString();
+        open(urlPage);
+        webdriver().shouldHave(url(urlPage));
     }
 
     @Step("Загрузка стартовой страницы на русском")
@@ -58,5 +61,12 @@ public class BaseClassWebTest extends BaseClassTest {
         $x("/html/body/div[1]/div/header/div[1]/div[3]/div[2]/div[1]").click();
         $x(language.getWebXpath()).click();
         webdriver().shouldHave(url(BASIC_URL + language.getUrlString()));
+    }
+    //@Step("Смена города")
+   //  /html/body/div[1]/div/header/div[1]/div[3]/div[1]/div/svg
+
+    @AfterEach
+    public void tearDownBrowser() {
+        Selenide.closeWebDriver();
     }
 }

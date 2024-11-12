@@ -21,7 +21,4 @@ public class BaseClassTest {
         Configuration.browserCapabilities =
                 new ChromeOptions().addArguments("--remote-allow-origins=*");
     }
-
-
-
 }

@@ -1,17 +1,18 @@
 package kz.ticketon.main_page;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
 import kz.ticketon.BaseClassWebTest;
 import kz.ticketon.LanguagesMain;
 import kz.ticketon.MaimMenuMain;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.util.Arrays;
 
-@Execution(ExecutionMode.SAME_THREAD)
+@Story("Проверка переходов на страницы разделов главного меню")
 public class CheckMainMenyTest extends BaseClassWebTest {
     @Test
+    @Description("язык ссайта выбран русский")
     public void checkMainMenyRus() {
         openStartPageRus();
         Arrays.asList(MaimMenuMain.values()).forEach(item -> {
@@ -22,6 +23,7 @@ public class CheckMainMenyTest extends BaseClassWebTest {
     }
 
     @Test
+    @Description("язык ссайта выбран английский")
     public void checkMainMenyEng() {
         openStartPageEng();
         Arrays.asList(MaimMenuMain.values()).forEach(item -> {
@@ -32,6 +34,7 @@ public class CheckMainMenyTest extends BaseClassWebTest {
     }
 
     @Test
+    @Description("язык ссайта выбран казахский")
     public void checkMainMenyKz() {
         openStartPageKz();
         Arrays.asList(MaimMenuMain.values()).forEach(item -> {
@@ -40,5 +43,4 @@ public class CheckMainMenyTest extends BaseClassWebTest {
                 }
         );
     }
-
 }
