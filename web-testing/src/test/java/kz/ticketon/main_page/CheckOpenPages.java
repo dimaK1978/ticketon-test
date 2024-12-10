@@ -1,15 +1,11 @@
 package kz.ticketon.main_page;
 
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import kz.ticketon.BaseClassWebTest;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import kz.ticketon.CitiesMain;
+import kz.ticketon.LanguagesMain;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 
 @Story("Проверка переходов на страницы разделов главного меню")
 public class CheckOpenPages extends BaseClassWebTest {
@@ -17,16 +13,16 @@ public class CheckOpenPages extends BaseClassWebTest {
     @Test
     @Description()
     public void checkStartRus(){
-        openStartPageRus();
+        openMainPage(LanguagesMain.RUS, CitiesMain.NO_CITY);
     }
 
     @Test
     public void checkStartKz(){
-        openStartPageKz();
+        openMainPage(LanguagesMain.ENG, CitiesMain.NO_CITY);
     }
 
     @Test
     public void checkStartEng(){
-        openStartPageEng();
+        openMainPage(LanguagesMain.KZ, CitiesMain.NO_CITY);
     }
 }
