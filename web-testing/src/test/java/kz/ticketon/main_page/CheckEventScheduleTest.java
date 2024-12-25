@@ -1,13 +1,26 @@
 package kz.ticketon.main_page;
-import io.qameta.allure.Description;
 import kz.ticketon.BaseClassWebTest;
-import kz.ticketon.LanguagesMain;
-import org.junit.jupiter.api.Test;
+import kz.ticketon.Cities;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class CheckEventScheduleTest extends  BaseClassWebTest {
-  /*  @Test
-    @Description("язык ссайта выбран русский")
-    public void checkEventSchedule() {
-        chooseEventScheduleMaim(LanguagesMain.RUS);
-    }*/
+
+    static Stream<Object[]> cities() {
+        List<Object[]> list = new ArrayList<>();
+        Arrays.asList(Cities.values()).forEach(
+                city -> list.add(new Object[]{city})
+        );
+        return list.stream();
+    }
+    @ParameterizedTest()
+    @MethodSource(value = "cities()")
+    public void checkEventSchedule(Cities citieMain) {
+        chooseEventScheduleMaim(citieMain);
+    }
 }

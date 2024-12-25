@@ -2,9 +2,9 @@ package kz.ticketon.main_page;
 
 import io.qameta.allure.Story;
 import kz.ticketon.BaseClassWebTest;
-import kz.ticketon.CitiesMain;
-import kz.ticketon.LanguagesMain;
-import kz.ticketon.MaimMenuMainPage;
+import kz.ticketon.Cities;
+import kz.ticketon.Languages;
+import kz.ticketon.MainMenuButtonsMainPage;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -18,9 +18,9 @@ public class CheckMainMenyTest extends BaseClassWebTest {
     //генерация исходных данных для теста, комбинации возможных вариантов
     static Stream<Object[]> menuItemsAndCities() {
         List<Object[]> list = new ArrayList<>();
-        Arrays.asList(MaimMenuMainPage.values()).forEach(
-                item -> Arrays.asList(CitiesMain.values()).forEach(
-                        city -> Arrays.asList(LanguagesMain.values()).forEach(
+        Arrays.asList(MainMenuButtonsMainPage.values()).forEach(
+                item -> Arrays.asList(Cities.values()).forEach(
+                        city -> Arrays.asList(Languages.values()).forEach(
                                 language -> list.add(new Object[]{item, city, language})
                         )
                 )
@@ -31,9 +31,9 @@ public class CheckMainMenyTest extends BaseClassWebTest {
     @ParameterizedTest()
     @MethodSource("menuItemsAndCities")
     public void checkMainMenyRus(
-            final MaimMenuMainPage menuItem,
-            final CitiesMain city,
-            final LanguagesMain language) {
+            final MainMenuButtonsMainPage menuItem,
+            final Cities city,
+            final Languages language) {
         chooseMaimMenu(menuItem, language, city);
     }
 }
