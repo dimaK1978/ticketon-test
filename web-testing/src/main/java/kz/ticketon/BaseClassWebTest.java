@@ -3,8 +3,7 @@ package kz.ticketon;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
-import kz.ticketon.pages.MainPage;
-import kz.ticketon.pages.ChapterPage;
+import kz.ticketon.pages.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -48,7 +47,6 @@ public class BaseClassWebTest extends BaseClassTest {
             final Languages startPageLanguage,
             final Languages newLanguage,
             final Cities city
-
     ) {
         MainPage mainPage = new MainPage(city, startPageLanguage);
         mainPage.openPage();
@@ -84,7 +82,7 @@ public class BaseClassWebTest extends BaseClassTest {
 
         webdriver().shouldHave(url(mainPage.getPageUrlCityLanguage()));
 
-        final String actualPageTitle = mainPage.getPageTitle().getOwnText().trim();
+        final String actualPageTitle = mainPage.getHeaderEventSchedule().getOwnText().trim();
         final String expectedPageTitle = mainPage.fullPageTitleCityLanguage();
 
         Assert.isTrue(
@@ -100,16 +98,18 @@ public class BaseClassWebTest extends BaseClassTest {
         );
     }
 
-    @Step("Проветка перехода на страницy события аффиши при клике на его иконку")
-    public void chooseEventScheduleMaim(final Cities city) {
-        /*   openMainPage(Languages.RUS, city);
-        SelenideElement wind1 = $("div[class='FullScreenDetailedCard_content__pxOGG FullScreenDetailedCard_backgroundOverlay__ceXQ5']");//.click();
-        final String xz = wind1.find("div[class='FullScreenDetailedCard_eventTitle__PpM1W']").getOwnText();
-        wind1.doubleClick();
-        String s = $("div[class='_ontentDetails_title__uUkkl']").find("h1").getText();
-        Assert.isTrue(xz.contains(s), "Заголовок иконки не совпдает с заголовком страницы события");*/
-    }
+    @Step("Проверка перехода к форме покупки билета на первый доступный фильм")
+    public void checkBuyTicketMovie(
+            final Cities city,
+            final Languages language
+    ) {
+        final MainPage mainPage = new MainPage(city, language);
+        mainPage.openPage();
+        final ChapterPageCinema pageCinema = (ChapterPageCinema) mainPage.clickMainMenuButton(MainMenuButtonsMainPage.CINEMA);
+        final EventPageCinema movie = pageCinema.clickFirstMovie();
+        final SessionMoviePage sessionMovie = movie.getFirstSessionMovie();
 
+    }
 
     @AfterEach
     public void tearDownBrowser() {
