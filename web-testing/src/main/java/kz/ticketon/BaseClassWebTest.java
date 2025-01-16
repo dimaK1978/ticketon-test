@@ -4,6 +4,11 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import kz.ticketon.pages.*;
+import kz.ticketon.pages.cinema.ChapterPageCinema;
+import kz.ticketon.pages.cinema.EventPageCinema;
+import kz.ticketon.pages.cinema.SessionMovieNewFormPage;
+import kz.ticketon.pages.cinema.SessionMoviePage;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,19 +18,14 @@ import static com.codeborne.selenide.Selenide.webdriver;
 import static com.codeborne.selenide.WebDriverConditions.url;
 
 public class BaseClassWebTest extends BaseClassTest {
-    protected static String BASIC_URL = "https://ticketon.kz";
-    protected static int TIME_OUT = 20000;
-
+    protected static int TIME_OUT = 100000;
 
     @BeforeAll
     public static void setUpAll() {
         Configuration.browserSize = "1280x800";
-        //  Configuration.pageLoadStrategy = "normal";
         Configuration.timeout = TIME_OUT;
-        Configuration.browserCapabilities =
-                new ChromeOptions().addArguments("--remote-allow-origins=*");
+        Configuration.browserCapabilities = new ChromeOptions().addArguments("--remote-allow-origins=*");
     }
-
 
     @Step("Переход на страницы через пункаты главного меню с учетом выбора города и языка")
     public void chooseMaimMenu(
@@ -36,7 +36,6 @@ public class BaseClassWebTest extends BaseClassTest {
         final MainPage mainPage = new MainPage(city, language);
         mainPage.openPage();
         final ChapterPage chapterPage = mainPage.clickMainMenuButton(MainMenuButton);
-
         final String actualTitle = chapterPage.getPageTitle().getText();
         final String expectedTitle = chapterPage.getPageTitleExpected();
         Assert.isTrue(actualTitle.equals(expectedTitle), "Заголовок страницы не совпадает с ожидаемым");
@@ -103,12 +102,25 @@ public class BaseClassWebTest extends BaseClassTest {
             final Cities city,
             final Languages language
     ) {
+        SoftAssertions softAssertions = new SoftAssertions();
         final MainPage mainPage = new MainPage(city, language);
         mainPage.openPage();
         final ChapterPageCinema pageCinema = (ChapterPageCinema) mainPage.clickMainMenuButton(MainMenuButtonsMainPage.CINEMA);
         final EventPageCinema movie = pageCinema.clickFirstMovie();
         final SessionMoviePage sessionMovie = movie.getFirstSessionMovie();
+        sessionMovie.clickSeat();
+        final String dateExpect = sessionMovie.getDateExpect();
+        final String dateActual = sessionMovie.getDateActual();
+        softAssertions.assertThat(dateActual).isEqualTo(dateExpect);
 
+        final String titleExpect = sessionMovie.getTitleExpect();
+        final String titleActual = sessionMovie.getTitleActual();
+        softAssertions.assertThat(titleActual).isEqualTo(titleExpect);
+
+        final String movieTheatreExpect = sessionMovie.getMovieTheatreExpect();
+        final String movieTheatreActual = sessionMovie.getMovieTheatreActual();
+        softAssertions.assertThat(movieTheatreActual).isEqualTo(movieTheatreExpect);
+        softAssertions.assertAll();
     }
 
     @AfterEach

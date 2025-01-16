@@ -1,13 +1,13 @@
-package kz.ticketon.pages;
+package kz.ticketon.pages.cinema;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
+import kz.ticketon.pages.ChapterPage;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$$x;
-import static com.codeborne.selenide.Selenide.$x;
 
 public class ChapterPageCinema extends ChapterPage {
 
@@ -30,7 +30,7 @@ public class ChapterPageCinema extends ChapterPage {
 
     public EventPageCinema clickMovie(final SelenideElement movie) {
         final String titleMovie = movie.$(new By.ByTagName("a")).getAttribute("title");
-        movie.click();
+        movie.scrollTo().click();
        return new EventPageCinema(city, language, titleMovie);
     }
 

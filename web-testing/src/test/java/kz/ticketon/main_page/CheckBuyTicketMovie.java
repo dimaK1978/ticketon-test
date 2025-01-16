@@ -22,6 +22,6 @@ public class CheckBuyTicketMovie extends  BaseClassWebTest {
     @MethodSource(value = "cities()")*/
     @Test
     public void checkEventSchedule() {
-        checkBuyTicketMovie(Cities.NO_CITY, Languages.RUS);
+        checkBuyTicketMovie(Cities.ALMATY, Languages.RUS);
     }
 }

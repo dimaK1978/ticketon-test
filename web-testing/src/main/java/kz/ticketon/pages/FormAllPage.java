@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
 import kz.ticketon.MainMenuButtonsMainPage;
+import kz.ticketon.pages.cinema.ChapterPageCinema;
 
 import static com.codeborne.selenide.Selenide.$x;
 
