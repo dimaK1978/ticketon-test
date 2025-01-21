@@ -1,14 +1,13 @@
 package kz.ticketon.pages;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
 
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
-public class MainPage extends FormAllPage {
+public class MainPage extends BaseTemlatePage {
 
     private final String BASIC_PAGE_URL = "https://ticketon.kz";
 
@@ -18,19 +17,25 @@ public class MainPage extends FormAllPage {
 
     //элемент заголовка страницы
     private final SelenideElement headerEventSchedule = $x("//h1[@class='Title_title__6QR87 Title_h1__YhWT1']");
-    private final SelenideElement headerPopular = $x("//h2[@class='PaginatedDetailsListWrapper_header__9WYX3']");
-
+    private final SelenideElement event = $(
+            "div[class='DetailedCardHover_eventHover__kxTCp DetailedCardPoster_eventHover__bYnSD']")
+            .$("div[class='DetailedCardHover_eventHoverTitle__OpJPs']");
 
     public MainPage(Cities city, Languages language) {
         super(city, language);
     }
 
-    //открытие страницы
+    @Step("открытие страницы")
     public void openPage() {
         open(getPageUrlCityLanguage());
     }
 
-    //получение полного заголовка страницы с учетом выбранного языка и города
+    @Step("Получение заголовка первого доступного события размещенного на странице")
+    public String getEventTitle() {
+        return event.scrollTo().getOwnText();
+    }
+
+    @Step("получение полного заголовка страницы с учетом выбранного языка и города")
     public String fullPageTitleCityLanguage() {
         String baseTitle;
 

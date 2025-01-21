@@ -4,9 +4,8 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import kz.ticketon.pages.*;
-import kz.ticketon.pages.cinema.ChapterPageCinema;
+import kz.ticketon.pages.cinema.ChapterCinemaPage;
 import kz.ticketon.pages.cinema.EventPageCinema;
-import kz.ticketon.pages.cinema.SessionMovieNewFormPage;
 import kz.ticketon.pages.cinema.SessionMoviePage;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
@@ -60,8 +59,7 @@ public class BaseClassWebTest extends BaseClassTest {
         } else {
             webdriver().shouldHave(url(mainPage.getPageUrlCityLanguage()));
         }
-
-        final String actualLanguageText = mainPage.getAccordeonLanguage().getOwnText();
+        final String actualLanguageText = mainPage.getActualLanguageText();
         Assert.isTrue(
                 actualLanguageText.equals(newLanguage.getDisplyName()),
                 "отображение языка страницы не соответсвует ожиданиям"
@@ -73,7 +71,6 @@ public class BaseClassWebTest extends BaseClassTest {
             final Cities startPageCity,
             final Languages language,
             final Cities newCity
-
     ) {
         MainPage mainPage = new MainPage(startPageCity, language);
         mainPage.openPage();
@@ -89,7 +86,7 @@ public class BaseClassWebTest extends BaseClassTest {
                 "отображение города на странице не соответсвует ожиданиям"
         );
 
-        final String actualShowCity = mainPage.getAccordeonCity().getOwnText();
+        final String actualShowCity = mainPage.getActualShowCity();
         final String expectedShowCity = mainPage.getCityName();
         Assert.isTrue(
                 actualShowCity.equals(expectedShowCity),
@@ -105,22 +102,45 @@ public class BaseClassWebTest extends BaseClassTest {
         SoftAssertions softAssertions = new SoftAssertions();
         final MainPage mainPage = new MainPage(city, language);
         mainPage.openPage();
-        final ChapterPageCinema pageCinema = (ChapterPageCinema) mainPage.clickMainMenuButton(MainMenuButtonsMainPage.CINEMA);
+        final ChapterCinemaPage pageCinema = (ChapterCinemaPage) mainPage.clickMainMenuButton(MainMenuButtonsMainPage.CINEMA);
         final EventPageCinema movie = pageCinema.clickFirstMovie();
+        final String titleExpectMovie = movie.getTitleExpect();
+        final String titleActualMovie = movie.getTitleActual();
+        softAssertions.assertThat(titleActualMovie).isEqualTo(titleExpectMovie);
         final SessionMoviePage sessionMovie = movie.getFirstSessionMovie();
-        sessionMovie.clickSeat();
-        final String dateExpect = sessionMovie.getDateExpect();
-        final String dateActual = sessionMovie.getDateActual();
-        softAssertions.assertThat(dateActual).isEqualTo(dateExpect);
+        sessionMovie.clickSeatAddTicket();
 
-        final String titleExpect = sessionMovie.getTitleExpect();
-        final String titleActual = sessionMovie.getTitleActual();
-        softAssertions.assertThat(titleActual).isEqualTo(titleExpect);
+        final String titleExpectSession = sessionMovie.getTitleExpect();
+        final String titleActualSession = sessionMovie.getTitleActual();
+        softAssertions.assertThat(titleActualSession).isEqualTo(titleExpectSession);
+        final String fullDataSessionExpect = sessionMovie.getFullDataSessionExpect();
+        final String fullDataSessionActual = sessionMovie.getFullDataSessionActual();
+        softAssertions.assertThat(fullDataSessionActual).contains(fullDataSessionExpect);
 
-        final String movieTheatreExpect = sessionMovie.getMovieTheatreExpect();
-        final String movieTheatreActual = sessionMovie.getMovieTheatreActual();
-        softAssertions.assertThat(movieTheatreActual).isEqualTo(movieTheatreExpect);
+        softAssertions.assertThat(sessionMovie.getTicketQantiti()).isEqualTo(1);
+
+        sessionMovie.clickSeatAddTicket();
+        softAssertions.assertThat(sessionMovie.getTicketQantiti()).isEqualTo(2);
+
+        sessionMovie.deleteTicket();
+        softAssertions.assertThat(sessionMovie.getTicketQantiti()).isEqualTo(1);
         softAssertions.assertAll();
+    }
+
+    @Step("Проверка поиска событий")
+    public void checkSearchEvents(
+            final Cities city,
+            final Languages language
+    ) {
+        MainPage mainPage = new MainPage(city, language);
+        mainPage.openPage();
+        String s = mainPage.getEventTitle();
+        SearchResultPage searchResultPage = mainPage.searchEvent(s);
+
+        Assert.isTrue(
+                searchResultPage.eventIsExists(s),
+                "На странице должно присутствовать событие с заданным заголовком"
+        );
     }
 
     @AfterEach

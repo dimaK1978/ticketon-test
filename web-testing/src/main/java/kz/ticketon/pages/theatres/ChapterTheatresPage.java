@@ -1,9 +1,10 @@
-package kz.ticketon.pages;
+package kz.ticketon.pages.theatres;
 
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
+import kz.ticketon.pages.ChapterPage;
 
-public class ChapterPageTheatres extends ChapterPage {
+public class ChapterTheatresPage extends ChapterPage {
     private final String shortPageUrl = "theatres";
 
     protected final String pageTitleRus = "Билеты в театр";
@@ -11,7 +12,7 @@ public class ChapterPageTheatres extends ChapterPage {
     protected final String pageTitleKz = "Театрға билеттер";
 
 
-    public ChapterPageTheatres(Cities city, Languages language) {
+    public ChapterTheatresPage(Cities city, Languages language) {
         super(city, language);
         super.shortPageUrl = shortPageUrl;
         super.pageTitleRus = pageTitleRus;

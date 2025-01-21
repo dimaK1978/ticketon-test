@@ -3,9 +3,10 @@ package kz.ticketon.pages.cinema;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SessionMoviePage {
+public abstract class SessionMoviePage {
     protected final String titleExpect;
     protected final String time;
     protected final String day;
@@ -13,15 +14,8 @@ public class SessionMoviePage {
     protected final String movieTheatre;
     protected final String adres;
     protected List<String> seats;
-
-    //первый найденный кликабельный элемент свободного места в зале
-    protected SelenideElement freeSeatButton;
-    //элемент содержащий заголовке формы с названием фильма
+     //элемент содержащий заголовке формы с названием фильма
     protected SelenideElement titleActual;
-    //элемент содержащий название кинотеатра
-    protected SelenideElement movieTheatreActual;
-    //элемент содержащий дату сеанса
-    protected SelenideElement dateActual;
 
     public SessionMoviePage(String titleExpect, String time, String day, String month, String movieTheatre, String adres) {
         this.titleExpect = titleExpect;
@@ -30,35 +24,34 @@ public class SessionMoviePage {
         this.month = month;
         this.movieTheatre = movieTheatre;
         this.adres = adres;
+        seats = new ArrayList<>();
     }
 
-    @Step("Клик на первое свободное место в зале")
-    public void clickSeat() {
-        freeSeatButton.click();
-    }
+    @Step("Клик на свободное место в зале - добавление билета")
+    public abstract void clickSeatAddTicket();
+
+    @Step("Удаление выбранного билета")
+    public abstract void deleteTicket();
 
     @Step("Получение текста актуального заголовка открывшейся формы с названием фильма")
     public String getTitleActual() {
         return titleActual.getText();
     }
 
-    @Step("Получение текста актуального названия кинотеатра открывшейся формы")
-    public String getMovieTheatreActual() {
-        return movieTheatreActual.getOwnText();
-    }
-    @Step("Получение текста актуальной даты сеанса из открывшейся формы")
-    public String getDateActual() {
-        return  dateActual.getText();
-    }
+    @Step("Получение ожидаемого текста заголовка с названием фильма")
     public String getTitleExpect() {
         return titleExpect;
     }
 
-    public String getDateExpect() {
-        return String.format("%s %s в %s", day, month, time);
+    @Step("Получение ожидаемого текста данных о сеансе с временем, датой и кинотеатром")
+    public String getFullDataSessionExpect() {
+        return String.format("%s %s в %s, %s", day, month, time, movieTheatre);
     }
 
-    public String getMovieTheatreExpect() {
-        return movieTheatre;
-    }
+    @Step("Получение текста данных о сеансе с временем, датой и кинотеатром из открывшейся формы")
+    public abstract String getFullDataSessionActual();
+
+    @Step("Получение количества выбранных билетов")
+    public abstract int getTicketQantiti();
+
 }
