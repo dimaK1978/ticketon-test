@@ -5,8 +5,10 @@ import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import kz.ticketon.pages.*;
 import kz.ticketon.pages.cinema.ChapterCinemaPage;
-import kz.ticketon.pages.cinema.EventPageCinema;
-import kz.ticketon.pages.cinema.SessionMoviePage;
+import kz.ticketon.pages.cinema.EventCinemaPage;
+import kz.ticketon.pages.SessionPage;
+import kz.ticketon.pages.theatres.ChapterTheatresPage;
+import kz.ticketon.pages.theatres.EventTheatresPage;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -94,7 +96,7 @@ public class BaseClassWebTest extends BaseClassTest {
         );
     }
 
-    @Step("Проверка перехода к форме покупки билета на первый доступный фильм")
+    @Step("Проверка перехода к форме покупки билетов в кино на доступный фильм")
     public void checkBuyTicketMovie(
             final Cities city,
             final Languages language
@@ -103,11 +105,11 @@ public class BaseClassWebTest extends BaseClassTest {
         final MainPage mainPage = new MainPage(city, language);
         mainPage.openPage();
         final ChapterCinemaPage pageCinema = (ChapterCinemaPage) mainPage.clickMainMenuButton(MainMenuButtonsMainPage.CINEMA);
-        final EventPageCinema movie = pageCinema.clickFirstMovie();
+        final EventCinemaPage movie = (EventCinemaPage) pageCinema.clickFirstEvent();
         final String titleExpectMovie = movie.getTitleExpect();
         final String titleActualMovie = movie.getTitleActual();
         softAssertions.assertThat(titleActualMovie).isEqualTo(titleExpectMovie);
-        final SessionMoviePage sessionMovie = movie.getFirstSessionMovie();
+        final SessionPage sessionMovie = movie.getFirstSessionMovie();
         sessionMovie.clickSeatAddTicket();
 
         final String titleExpectSession = sessionMovie.getTitleExpect();
@@ -124,6 +126,39 @@ public class BaseClassWebTest extends BaseClassTest {
 
         sessionMovie.deleteTicket();
         softAssertions.assertThat(sessionMovie.getTicketQantiti()).isEqualTo(1);
+        softAssertions.assertAll();
+    }
+
+    @Step("Проверка перехода к форме покупки билета в театр на доступный спектакль")
+    public void checkBuyTicketTheatrePlay(
+            final Cities city,
+            final Languages language
+    ) {
+        SoftAssertions softAssertions = new SoftAssertions();
+        final MainPage mainPage = new MainPage(city, language);
+        mainPage.openPage();
+        final ChapterTheatresPage theatresPage = (ChapterTheatresPage) mainPage.clickMainMenuButton(MainMenuButtonsMainPage.THEATRES);
+        final EventTheatresPage theatrePlay = (EventTheatresPage) theatresPage.clickFirstEvent();
+        final String titleExpectTheatrePlay = theatrePlay.getTitleExpect();
+        final String titleActualTheatrePlay = theatrePlay.getTitleActual();
+        softAssertions.assertThat(titleActualTheatrePlay).isEqualTo(titleExpectTheatrePlay);
+        final SessionPage sessionTheatrePlay = theatrePlay.getFirstSessionMovie();
+        sessionTheatrePlay.clickSeatAddTicket();
+
+        final String titleExpectSession = sessionTheatrePlay.getTitleExpect();
+        final String titleActualSession = sessionTheatrePlay.getTitleActual();
+        softAssertions.assertThat(titleActualSession).isEqualTo(titleExpectSession);
+        final String fullDataSessionExpect = sessionTheatrePlay.getFullDataSessionExpect();
+        final String fullDataSessionActual = sessionTheatrePlay.getFullDataSessionActual();
+        softAssertions.assertThat(fullDataSessionActual).contains(fullDataSessionExpect);
+
+        softAssertions.assertThat(sessionTheatrePlay.getTicketQantiti()).isEqualTo(1);
+
+        sessionTheatrePlay.clickSeatAddTicket();
+        softAssertions.assertThat(sessionTheatrePlay.getTicketQantiti()).isEqualTo(2);
+
+        sessionTheatrePlay.deleteTicket();
+        softAssertions.assertThat(sessionTheatrePlay.getTicketQantiti()).isEqualTo(1);
         softAssertions.assertAll();
     }
 

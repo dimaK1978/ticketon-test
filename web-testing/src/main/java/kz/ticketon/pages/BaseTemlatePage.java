@@ -98,7 +98,7 @@ private final SelenideElement findeButton =$x("//img[@src='/rrs/_next/static/med
                 chapterPage = new ChapterPageSports(city, language);
                 break;
             case CHILDREN:
-                chapterPage = new ChapterPageChildren(city, language);
+                chapterPage = new ChapterChildrenPage(city, language);
                 break;
             case CHRISTMAS_EVENT:
                 chapterPage = new ChapterPageChristmasEvent(city, language);

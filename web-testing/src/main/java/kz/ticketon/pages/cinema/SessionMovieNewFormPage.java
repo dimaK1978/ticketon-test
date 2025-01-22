@@ -2,12 +2,11 @@ package kz.ticketon.pages.cinema;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Step;
-import org.openqa.selenium.By;
+import kz.ticketon.pages.SessionPage;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class SessionMovieNewFormPage extends SessionMoviePage {
+public class SessionMovieNewFormPage extends SessionPage {
 
     //элемент содержащий название кинотеатра
     protected SelenideElement movieTheatreActual = movieTheatreActual = $x("//div[@class='s-i-in']");
@@ -35,8 +34,8 @@ public class SessionMovieNewFormPage extends SessionMoviePage {
     @Override
     public String getFullDataSessionActual() {
         return String.format(
-                "%s, %s %s", dateActual.getText(),
-                movieTheatreActual.getOwnText(), adres);
+                "%s, %s", dateActual.getText(),
+                movieTheatreActual.getOwnText());
     }
 
     @Override
@@ -46,10 +45,8 @@ public class SessionMovieNewFormPage extends SessionMoviePage {
         }
         return Integer.parseInt(tickets.getOwnText().split(" ")[0]);
     }
-
-    public SessionMovieNewFormPage(String titleExpect, String time, String day, String month, String movieTheatre, String adres) {
-        super(titleExpect, time, day, month, movieTheatre, adres);
+    public SessionMovieNewFormPage(String titleExpect, String time, String day, String month, String movieTheatre) {
+        super(titleExpect, time, day, month, movieTheatre);
         titleActual = $x("//div[@id='s-event']");
-
     }
 }

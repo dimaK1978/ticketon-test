@@ -1,21 +1,29 @@
 package kz.ticketon.pages;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
+import kz.ticketon.pages.cinema.EventCinemaPage;
+import org.openqa.selenium.By;
+
+import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class ChapterPage {
+public abstract class ChapterPage {
 
     protected String shortPageUrl;
     protected Cities city;
     protected Languages language;
 
-
     protected String pageTitleRus;
     protected String pageTitleEng;
     protected String pageTitleKz;
+
+    protected final SelenideElement pageTitle = $x("//div[@class='page-title']");
+    protected final ElementsCollection movieList = $$x("//div[@class='block-1 list-block']");
 
     public ChapterPage(Cities city, Languages language) {
         this.city = city;
@@ -30,7 +38,7 @@ public class ChapterPage {
         return pageTitle;
     }
 
-    final SelenideElement pageTitle = $x("//div[@class='page-title']");
+
 
     public String getShortPageUrl() {
         return shortPageUrl;
@@ -101,5 +109,8 @@ public class ChapterPage {
         return String.format("%s/%s", mainPage.getPageUrlCityLanguage(), shortPageUrl);
     }
 
+    @Step("Клик на доступное событие")
+    public abstract EventPage clickEvent(final SelenideElement movie);
 
+    public abstract EventPage clickFirstEvent();
 }

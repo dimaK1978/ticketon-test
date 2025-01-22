@@ -1,22 +1,21 @@
-package kz.ticketon.pages.cinema;
+package kz.ticketon.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
-import kz.ticketon.pages.ChapterPage;
-import kz.ticketon.pages.EventPage;
+import kz.ticketon.pages.cinema.EventCinemaPage;
 import org.openqa.selenium.By;
 
 import java.util.concurrent.TimeUnit;
 
-public class ChapterCinemaPage extends ChapterPage {
+public class ChapterChildrenPage extends ChapterPage {
 
-    private final String shortPageUrl = "cinema";
-    private final String pageTitleRus = "Билеты в кино";
-    private final String pageTitleEng = "Movie tickets";
-    private final String pageTitleKz = "Киноға билеттер";
+    private final String shortPageUrl = "children";
+    protected final String pageTitleRus = "Билеты детям";
+    protected final String pageTitleEng = "Children tickets";
+    protected final String pageTitleKz = "Балаларға билеттер";
 
-    public ChapterCinemaPage(Cities city, Languages language) {
+    public ChapterChildrenPage(Cities city, Languages language) {
         super(city, language);
         super.shortPageUrl = shortPageUrl;
         super.pageTitleRus = pageTitleRus;
