@@ -1,13 +1,8 @@
 package kz.ticketon;
 
 import com.codeborne.selenide.Configuration;
-import io.qameta.allure.Step;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.springframework.beans.factory.annotation.Value;
-
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverConditions.url;
 
 public class BaseClassTest {
 

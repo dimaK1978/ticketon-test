@@ -5,8 +5,17 @@ import io.qameta.allure.Step;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
 import kz.ticketon.MainMenuButtonsMainPage;
+import kz.ticketon.SleepUtils;
+import kz.ticketon.pages.children.ChapterChildrenPage;
+import kz.ticketon.pages.christmas_event.ChapterChristmasEventPage;
 import kz.ticketon.pages.cinema.ChapterCinemaPage;
+import kz.ticketon.pages.concerts.ChapterConcertsPage;
+import kz.ticketon.pages.entertainment.ChapterEntertainmentPage;
+import kz.ticketon.pages.master_classes.ChapterMasterClassesPage;
+import kz.ticketon.pages.museums.ChapterMuseumsPage;
+import kz.ticketon.pages.sports.ChapterSportsPage;
 import kz.ticketon.pages.theatres.ChapterTheatresPage;
+import kz.ticketon.pages.tours.ChapterPageTours;
 
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -19,7 +28,6 @@ public class BaseTemlatePage {
         this.city = city;
         this.language = language;
     }
-
     //элемент отображения и выбора языка
     private final SelenideElement accordeonLanguage = $x("//div[@class='Languages_wrapperLanguagesBtn__lv3IP']");
 
@@ -27,12 +35,12 @@ public class BaseTemlatePage {
     private final SelenideElement accordeonCity = $x("//div[@class='CitySelect_markerName__Jzfjc']");
 
     //элемент поиска событий
-    private final SelenideElement searchEventForm =$x("//input[@class='SearchInput_isEmpty__wgMBa']");
-private final SelenideElement findeButton =$x("//img[@src='/rrs/_next/static/media/loupe.11a27ae1.svg']");
+    private final SelenideElement searchEventForm = $x("//input[@class='SearchInput_isEmpty__wgMBa']");
+    private final SelenideElement findeButton = $x("//img[@src='/rrs/_next/static/media/loupe.11a27ae1.svg']");
 
     @Step("смена языка")
     public void changeLanguage(Languages newLanguage) {
-        if(newLanguage == language) {
+        if (newLanguage == language) {
             return;
         }
         accordeonLanguage.click();
@@ -58,7 +66,9 @@ private final SelenideElement findeButton =$x("//img[@src='/rrs/_next/static/med
 
     @Step("Поиск события")
     public SearchResultPage searchEvent(String eventTitle) {
+        SleepUtils.sleepSeconds(5);
         searchEventForm.scrollTo().sendKeys(eventTitle);
+        SleepUtils.sleepSeconds(5);
         findeButton.click();
         return new SearchResultPage(city, language);
     }
@@ -73,11 +83,12 @@ private final SelenideElement findeButton =$x("//img[@src='/rrs/_next/static/med
         return accordeonCity.getOwnText();
     }
 
+    @Step("Получение названия города страницы")
     public String getCityName() {
         return getCityName(city);
     }
 
-    @Step("выбор пункта главного меню")
+    @Step("Переход на страницу выбранного раздела главного меню нажатием на соответсвующую кнопку")
     public ChapterPage clickMainMenuButton(MainMenuButtonsMainPage mainMenuButton) {
         $x(String.format(
                 "//a[@class='NavigationItem_navigationLink__cSZrB' and contains(text(),'%s')] ",
@@ -92,16 +103,25 @@ private final SelenideElement findeButton =$x("//img[@src='/rrs/_next/static/med
                 chapterPage = new ChapterTheatresPage(city, language);
                 break;
             case CONCERTS:
-                chapterPage = new ChapterPageConcerts(city, language);
+                chapterPage = new ChapterConcertsPage(city, language);
                 break;
             case SPORT:
-                chapterPage = new ChapterPageSports(city, language);
+                chapterPage = new ChapterSportsPage(city, language);
                 break;
             case CHILDREN:
                 chapterPage = new ChapterChildrenPage(city, language);
                 break;
             case CHRISTMAS_EVENT:
-                chapterPage = new ChapterPageChristmasEvent(city, language);
+                chapterPage = new ChapterChristmasEventPage(city, language);
+                break;
+            case MASTER_CLASSES:
+                chapterPage = new ChapterMasterClassesPage(city, language);
+                break;
+            case MUSEUMS:
+                chapterPage = new ChapterMuseumsPage(city, language);
+                break;
+            case ENTERTAIMENT:
+                chapterPage = new ChapterEntertainmentPage(city, language);
                 break;
             default:
                 chapterPage = new ChapterPageTours(city, language);
@@ -110,7 +130,7 @@ private final SelenideElement findeButton =$x("//img[@src='/rrs/_next/static/med
         return chapterPage;
     }
 
-    private String getCityName(Cities city) {
+   private String getCityName(Cities city) {
         String cityName;
         switch (language) {
             case ENG: {
@@ -129,7 +149,7 @@ private final SelenideElement findeButton =$x("//img[@src='/rrs/_next/static/med
         return cityName;
     }
 
-   protected String getMainMenuButtonName(MainMenuButtonsMainPage MainMenuButton) {
+    protected String getMainMenuButtonName(MainMenuButtonsMainPage MainMenuButton) {
         String cityName;
         switch (language) {
             case ENG: {

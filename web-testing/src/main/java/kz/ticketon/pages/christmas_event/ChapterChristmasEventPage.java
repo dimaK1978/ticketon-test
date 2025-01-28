@@ -1,20 +1,22 @@
-package kz.ticketon.pages;
+package kz.ticketon.pages.christmas_event;
 
 import com.codeborne.selenide.SelenideElement;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
+import kz.ticketon.pages.ChapterPage;
+import kz.ticketon.pages.EventPage;
 import kz.ticketon.pages.cinema.EventCinemaPage;
 import org.openqa.selenium.By;
 
 import java.util.concurrent.TimeUnit;
 
-public class ChapterPageChristmasEvent extends ChapterPage {
+public class ChapterChristmasEventPage extends ChapterPage {
     private final String shortPageUrl = "christmas-event";
     protected final String pageTitleRus = "Новогодние события";
     protected final String pageTitleEng = "Christmas Event";
     protected final String pageTitleKz = "ЖАНА-ЖЫЛ";
 
-    public ChapterPageChristmasEvent(Cities city, Languages language) {
+    public ChapterChristmasEventPage(Cities city, Languages language) {
         super(city, language);
         super.shortPageUrl = shortPageUrl;
         super.pageTitleRus = pageTitleRus;
@@ -35,7 +37,7 @@ public class ChapterPageChristmasEvent extends ChapterPage {
             throw new RuntimeException(e);
         }
         if (movieList.isEmpty()) {
-            throw new RuntimeException("Доступных фильмов нет");
+            throw new RuntimeException("Доступных новогодних мероприятий нет");
         }
         return clickEvent(movieList.first());
     }

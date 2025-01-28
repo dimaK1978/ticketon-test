@@ -1,21 +1,24 @@
-package kz.ticketon.pages;
+package kz.ticketon.pages.master_classes;
 
 import com.codeborne.selenide.SelenideElement;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
-import kz.ticketon.pages.cinema.EventCinemaPage;
+import kz.ticketon.pages.ChapterPage;
+import kz.ticketon.pages.EventPage;
+import kz.ticketon.pages.concerts.EventConcertsPage;
 import org.openqa.selenium.By;
 
 import java.util.concurrent.TimeUnit;
 
-public class ChapterChildrenPage extends ChapterPage {
+public class ChapterMasterClassesPage extends ChapterPage {
+    private final String shortPageUrl = "master-classes";
 
-    private final String shortPageUrl = "children";
-    protected final String pageTitleRus = "Билеты детям";
-    protected final String pageTitleEng = "Children tickets";
-    protected final String pageTitleKz = "Балаларға билеттер";
+    protected final String pageTitleRus = "Мастер-классы";
+    protected final String pageTitleEng = "Master classes";
+    protected final String pageTitleKz = "Мастер-класстар";
 
-    public ChapterChildrenPage(Cities city, Languages language) {
+
+    public ChapterMasterClassesPage(Cities city, Languages language) {
         super(city, language);
         super.shortPageUrl = shortPageUrl;
         super.pageTitleRus = pageTitleRus;
@@ -26,7 +29,7 @@ public class ChapterChildrenPage extends ChapterPage {
     public EventPage clickEvent(final SelenideElement movie) {
         final String titleMovie = movie.$(new By.ByTagName("a")).getAttribute("title");
         movie.scrollTo().click();
-        return new EventCinemaPage(city, language, titleMovie);
+        return new EventConcertsPage(city, language, titleMovie);
     }
     @Override
     public EventPage clickFirstEvent() {
@@ -36,7 +39,7 @@ public class ChapterChildrenPage extends ChapterPage {
             throw new RuntimeException(e);
         }
         if (movieList.isEmpty()) {
-            throw new RuntimeException("Доступных фильмов нет");
+            throw new RuntimeException("Доступных концертов нет");
         }
         return clickEvent(movieList.first());
     }

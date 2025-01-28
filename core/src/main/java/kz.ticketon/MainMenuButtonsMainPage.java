@@ -8,29 +8,11 @@ public enum MainMenuButtonsMainPage {
     SPORT("Спорт", "Sport", "Спорт"),
     CHILDREN("Детям","Children","Балаларға"),
     CHRISTMAS_EVENT("Ёлки","Christmas Events","Жана-Жыл"),
-    TOURS("Туры","Tours","Турлар");
-   /* MASTER_CLASSES(
-            "/html/body/div[1]/div/header/div[2]/div/nav/ul/li[8]/a",
-            "master-classes",
-            "Мастер-классы",
-            "Мастер-класстар",
-            "Master classes"
-    ),
-    MUSEUMS(
-            "/html/body/div[1]/div/header/div[2]/div/nav/ul/li[9]/a",
-            "museums",
-            "Музеи",
-            "Мұражайлар",
-            "Museums tickets"
-    ),
+    TOURS("Туры","Tours","Турлар"),
 
-    ENTERTAIMENT(
-            "/html/body/div[1]/div/header/div[2]/div/nav/ul/li[10]/a",
-            "entertainment",
-            "Развлечения",
-            "Ойын-сауықтар",
-            "Entertainment"
-    );*/
+    MASTER_CLASSES("Мастер-классы","Master classes","Мастер-класстар"),
+    MUSEUMS("Музеи","Museums","Мұражайлар"),
+    ENTERTAIMENT("Развлеченияa","Entertainment","Ойын-сауықтар");
 
     private String buttonNameRu;
     private String buttonNameEn;

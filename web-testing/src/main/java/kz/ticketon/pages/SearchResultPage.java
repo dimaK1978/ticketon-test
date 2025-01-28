@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
+import kz.ticketon.SleepUtils;
 
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -16,13 +17,13 @@ public class SearchResultPage extends BaseTemlatePage {
         super(city, language);
     }
 
-    @Step("Проверка наличия на странице события с заданным заголовком")
+    @Step("Проверка на странице результатов поиска наличиясобытия с заданным заголовком")
     public boolean eventIsExists(final String eventTitle) {
-        final SelenideElement selenideElement = $x(String.format(
+        final SelenideElement event = $x(String.format(
                 stringXpathSearchEvent,
                 eventTitle
         ));
-        if (selenideElement.exists()) {
+        if (event.exists()) {
             return true;
         } else {
             return false;

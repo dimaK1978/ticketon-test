@@ -16,6 +16,9 @@ public abstract class SessionPage {
     //элемент содержащий заголовке формы с названием события
     protected SelenideElement titleActual;
 
+   protected TickeForm tickeForm = TickeForm.WITH_PLACE;
+   protected int plaseInd = 0;
+
     public SessionPage(String titleExpect, String time, String day, String month, String eventLocation) {
         this.titleExpect = titleExpect;
         this.time = time;
@@ -52,4 +55,8 @@ public abstract class SessionPage {
     @Step("Получение количества выбранных билетов")
     public abstract int getTicketQantiti();
 
+    protected enum TickeForm {
+        WITH_PLACE,
+        WITHOUT_PLACE;
+    }
 }

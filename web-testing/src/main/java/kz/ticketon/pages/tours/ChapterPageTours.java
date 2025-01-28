@@ -1,22 +1,23 @@
-package kz.ticketon.pages;
+package kz.ticketon.pages.tours;
 
 import com.codeborne.selenide.SelenideElement;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
+import kz.ticketon.pages.ChapterPage;
+import kz.ticketon.pages.EventPage;
 import kz.ticketon.pages.cinema.EventCinemaPage;
 import org.openqa.selenium.By;
 
 import java.util.concurrent.TimeUnit;
 
-public class ChapterPageConcerts extends ChapterPage {
-    private final String shortPageUrl = "concerts";
+public class ChapterPageTours extends ChapterPage {
+    private final String shortPageUrl = "tours";
 
-    protected final String pageTitleRus = "Билеты на концерт";
-    protected final String pageTitleEng = "Concert tickets";
-    protected final String pageTitleKz = "Концертке билеттер";
+    protected final String pageTitleRus = "Туры";
+    protected final String pageTitleEng = "Tours";
+    protected final String pageTitleKz = "Саяхаттар";
 
-
-    public ChapterPageConcerts(Cities city, Languages language) {
+    public ChapterPageTours(Cities city, Languages language) {
         super(city, language);
         super.shortPageUrl = shortPageUrl;
         super.pageTitleRus = pageTitleRus;

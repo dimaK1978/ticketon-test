@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
+import kz.ticketon.SleepUtils;
 import org.openqa.selenium.By;
 
 import java.util.concurrent.TimeUnit;
@@ -14,7 +15,7 @@ import static com.codeborne.selenide.Selenide.$x;
 public abstract class EventPage extends BaseTemlatePage {
 
     protected final String title;
-    protected  ElementsCollection availableSessions;
+    protected ElementsCollection availableSessions;
     protected String stringForFindLocation;
 
     protected final SelenideElement titleEvent = $x("//h1");
@@ -24,7 +25,7 @@ public abstract class EventPage extends BaseTemlatePage {
         this.title = title;
     }
 
-    public SessionPage getFirstSessionMovie() {
+    public SessionPage getFirstSessionEvent() {
         return getSessionMovie(availableSessions.first());
     }
 
@@ -39,11 +40,7 @@ public abstract class EventPage extends BaseTemlatePage {
         final String month = selenideElement.find("div[class='Date_dateText__h6416']").$(new By.ByTagName("div")).getText();
         final String eventLocation = selenideElement.find(stringForFindLocation).getText();
         buttonSession.scrollTo().click();
-        try {
-            TimeUnit.SECONDS.sleep(30);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        SleepUtils.sleepSeconds(20);
         return createSesionPage(time, day, month, eventLocation);
     }
 
