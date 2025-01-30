@@ -11,6 +11,8 @@ import kz.ticketon.pages.cinema.EventCinemaPage;
 import kz.ticketon.pages.SessionPage;
 import kz.ticketon.pages.concerts.ChapterConcertsPage;
 import kz.ticketon.pages.concerts.EventConcertsPage;
+import kz.ticketon.pages.museums.ChapterMuseumsPage;
+import kz.ticketon.pages.museums.EventMuseumPage;
 import kz.ticketon.pages.sports.ChapterSportsPage;
 import kz.ticketon.pages.sports.EventSportsPage;
 import kz.ticketon.pages.theatres.ChapterTheatresPage;
@@ -115,12 +117,11 @@ public class BaseClassWebTest extends BaseClassTest {
         mainPage.openPage();
         final ChapterCinemaPage pageCinema = (ChapterCinemaPage) mainPage.clickMainMenuButton(MainMenuButtonsMainPage.CINEMA);
         final EventCinemaPage movie = (EventCinemaPage) pageCinema.clickFirstEvent();
-        final String titleExpectMovie = movie.getTitleExpect();
-        final String titleActualMovie = movie.getTitleActual();
-        softAssertions.assertThat(titleActualMovie).isEqualTo(titleExpectMovie);
+        checkEventPageTitle(movie, softAssertions);
         final SessionPage sessionMovie = movie.getFirstSessionEvent();
         sessionMovie.clickSeatAddTicket();
         checkCreateSessionEventsAddAndDelTickets(sessionMovie, softAssertions);
+        checkMakingOrdere(sessionMovie, softAssertions);
         softAssertions.assertAll();
     }
 
@@ -134,12 +135,11 @@ public class BaseClassWebTest extends BaseClassTest {
         mainPage.openPage();
         final ChapterTheatresPage theatresPage = (ChapterTheatresPage) mainPage.clickMainMenuButton(MainMenuButtonsMainPage.THEATRES);
         final EventTheatresPage theatrePlay = (EventTheatresPage) theatresPage.clickFirstEvent();
-        final String titleExpectTheatrePlay = theatrePlay.getTitleExpect();
-        final String titleActualTheatrePlay = theatrePlay.getTitleActual();
-        softAssertions.assertThat(titleActualTheatrePlay).isEqualTo(titleExpectTheatrePlay);
+        checkEventPageTitle(theatrePlay, softAssertions);
         final SessionPage sessionTheatrePlay = theatrePlay.getFirstSessionEvent();
         sessionTheatrePlay.clickSeatAddTicket();
         checkCreateSessionEventsAddAndDelTickets(sessionTheatrePlay, softAssertions);
+        checkMakingOrdere(sessionTheatrePlay, softAssertions);
         softAssertions.assertAll();
     }
 
@@ -153,12 +153,11 @@ public class BaseClassWebTest extends BaseClassTest {
         mainPage.openPage();
         final ChapterConcertsPage concertsPage = (ChapterConcertsPage) mainPage.clickMainMenuButton(MainMenuButtonsMainPage.CONCERTS);
         final EventConcertsPage concert = (EventConcertsPage) concertsPage.clickFirstEvent();
-        final String titleExpectConcert = concert.getTitleExpect();
-        final String titleActualConcert = concert.getTitleActual();
-        softAssertions.assertThat(titleActualConcert).isEqualTo(titleExpectConcert);
+        checkEventPageTitle(concert, softAssertions);
         final SessionPage sessionConcert = concert.getFirstSessionEvent();
         sessionConcert.clickSeatAddTicket();
         checkCreateSessionEventsAddAndDelTickets(sessionConcert, softAssertions);
+        checkMakingOrdere(sessionConcert, softAssertions);
         softAssertions.assertAll();
     }
 
@@ -172,12 +171,11 @@ public class BaseClassWebTest extends BaseClassTest {
         mainPage.openPage();
         final ChapterSportsPage sportsPage = (ChapterSportsPage) mainPage.clickMainMenuButton(MainMenuButtonsMainPage.SPORT);
         final EventSportsPage sportGame = (EventSportsPage) sportsPage.clickFirstEvent();
-        final String titleExpectSportGame = sportGame.getTitleExpect();
-        final String titleActualSportGame = sportGame.getTitleActual();
-        softAssertions.assertThat(titleActualSportGame).isEqualTo(titleExpectSportGame);
+        checkEventPageTitle(sportGame, softAssertions);
         final SessionPage sessionSportGame = sportGame.getFirstSessionEvent();
         sessionSportGame.clickSeatAddTicket();
         checkCreateSessionEventsAddAndDelTickets(sessionSportGame, softAssertions);
+        checkMakingOrdere(sessionSportGame, softAssertions);
         softAssertions.assertAll();
     }
 
@@ -189,14 +187,13 @@ public class BaseClassWebTest extends BaseClassTest {
         SoftAssertions softAssertions = new SoftAssertions();
         final MainPage mainPage = new MainPage(city, language);
         mainPage.openPage();
-        final ChapterSportsPage sportsPage = (ChapterSportsPage) mainPage.clickMainMenuButton(MainMenuButtonsMainPage.MUSEUMS);
-        final EventSportsPage sportGame = (EventSportsPage) sportsPage.clickFirstEvent();
-        final String titleExpectSportGame = sportGame.getTitleExpect();
-        final String titleActualSportGame = sportGame.getTitleActual();
-        softAssertions.assertThat(titleActualSportGame).isEqualTo(titleExpectSportGame);
-        final SessionPage sessionSportGame = sportGame.getFirstSessionEvent();
-        sessionSportGame.clickSeatAddTicket();
-        checkCreateSessionEventsAddAndDelTickets(sessionSportGame, softAssertions);
+        final ChapterMuseumsPage museumPagePage = (ChapterMuseumsPage) mainPage.clickMainMenuButton(MainMenuButtonsMainPage.MUSEUMS);
+        final EventMuseumPage  museumTour = (EventMuseumPage)  museumPagePage.clickFirstEvent();
+        checkEventPageTitle(museumTour, softAssertions);
+        final SessionPage sessionMuseumTour = museumTour.getFirstSessionEvent();
+        sessionMuseumTour.clickSeatAddTicket();
+        checkCreateSessionEventsAddAndDelTickets(sessionMuseumTour, softAssertions);
+        checkMakingOrdere(sessionMuseumTour, softAssertions);
         softAssertions.assertAll();
     }
     @Step("Проверка поиска событий")
@@ -207,17 +204,17 @@ public class BaseClassWebTest extends BaseClassTest {
         MainPage mainPage = new MainPage(city, language);
         mainPage.openPage();
         String eventString = mainPage.getEventTitle();
-
         SearchResultPage searchResultPage = mainPage.searchEvent(eventString);
-
         Assert.isTrue(
                 searchResultPage.eventIsExists(eventString),
                 "На странице отсутсвует событие с искомым заголовком"
         );
     }
 
+
+
     @Step("Проверка правильности заполнения формы события при приобретении билета, выбора, добавления и удаления билетов")
-    protected void checkCreateSessionEventsAddAndDelTickets(final SessionPage sessionPage, final SoftAssertions softAssertions) {
+    private void checkCreateSessionEventsAddAndDelTickets(final SessionPage sessionPage, final SoftAssertions softAssertions) {
         final String titleExpectSession = sessionPage.getTitleExpect();
         final String titleActualSession = sessionPage.getTitleActual();
         softAssertions.assertThat(titleExpectSession).contains( titleActualSession);
@@ -229,6 +226,20 @@ public class BaseClassWebTest extends BaseClassTest {
         softAssertions.assertThat(sessionPage.getTicketQantiti()).isEqualTo(2);
         sessionPage.deleteTicket();
         softAssertions.assertThat(sessionPage.getTicketQantiti()).isEqualTo(1);
+    }
+   @Step("Проверка заголовка страницы события, его соотвеьсвие выбранному")
+    private void checkEventPageTitle(final EventPage eventPage,final SoftAssertions softAssertions){
+        final String titleExpectEventPage = eventPage.getTitleExpect();
+        final String titleActualEventPage = eventPage.getTitleActual();
+        softAssertions.assertThat(titleActualEventPage).isEqualTo(titleExpectEventPage);
+    }
+
+    @Step("Проверка перехода к оформлению заказа")
+    private void checkMakingOrdere(final SessionPage sessionPage,final SoftAssertions softAssertions){
+        MakingOrderPage makingOrderPage = sessionPage.makingOrder();
+        final String titleExpect = makingOrderPage.getTitleExpected();
+        final String titleActual = makingOrderPage.getTitleActual();
+        softAssertions.assertThat(titleActual).contains(titleExpect);
     }
 
     @AfterEach

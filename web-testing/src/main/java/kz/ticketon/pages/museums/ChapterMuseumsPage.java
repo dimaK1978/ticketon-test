@@ -3,6 +3,7 @@ package kz.ticketon.pages.museums;
 import com.codeborne.selenide.SelenideElement;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
+import kz.ticketon.SleepUtils;
 import kz.ticketon.pages.ChapterPage;
 import kz.ticketon.pages.EventPage;
 import kz.ticketon.pages.concerts.EventConcertsPage;
@@ -29,17 +30,13 @@ public class ChapterMuseumsPage extends ChapterPage {
     public EventPage clickEvent(final SelenideElement movie) {
         final String titleMovie = movie.$(new By.ByTagName("a")).getAttribute("title");
         movie.scrollTo().click();
-        return new EventConcertsPage(city, language, titleMovie);
+        return new EventMuseumPage(city, language, titleMovie);
     }
     @Override
     public EventPage clickFirstEvent() {
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        SleepUtils.sleepSeconds(5);
         if (movieList.isEmpty()) {
-            throw new RuntimeException("Доступных концертов нет");
+            throw new RuntimeException("Доступных музейных экскурсий и выставок нет");
         }
         return clickEvent(movieList.first());
     }

@@ -2,7 +2,10 @@ package kz.ticketon.pages.sports;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import kz.ticketon.SleepUtils;
+import kz.ticketon.pages.MakingOrderOldFormPage;
+import kz.ticketon.pages.MakingOrderPage;
 import kz.ticketon.pages.SessionPage;
 
 import java.util.concurrent.TimeUnit;
@@ -47,20 +50,18 @@ public class SessionSportsPage extends SessionPage {
     public SessionSportsPage(String titleExpect, String time, String day, String month, String movieTheatre) {
         super(titleExpect, time, day, month, movieTheatre);
         titleActual = $x("//div[@class='title']");
-        cleanTicket();
+        makingOrderButtom = $x("//button[@class='button primary']");
     }
 
-    private void cleanTicket() {
-        if (tickets.size() != 0) {
-            tickets.stream().forEach(ticket -> ticket.$("div[class='closeBtn']").click());
-        }
-    }
 
     @Override
     public void clickSeatAddTicket() {
         if (addTicketButton.exists()) {
-            addTicketButton.click();
             tickeForm = TickeForm.WITHOUT_PLACE;
+            if (ticketsWithoutPlace.size() == plaseInd) {
+                addTicketButton.click();
+            }
+            plaseInd++;
         } else {
             if (sectorOfHall.exists()) {
                 sectorOfHall.click();
@@ -80,5 +81,12 @@ public class SessionSportsPage extends SessionPage {
                 plaseInd++;
             }
         }
+    }
+
+    @Override
+    @Step("переход к оформлению заказа")
+    public MakingOrderPage makingOrder(){
+        makingOrderButtom.click();
+        return new MakingOrderOldFormPage();
     }
 }

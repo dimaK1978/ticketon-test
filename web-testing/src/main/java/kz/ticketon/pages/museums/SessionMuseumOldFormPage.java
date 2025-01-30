@@ -1,4 +1,4 @@
-package kz.ticketon.pages.theatres;
+package kz.ticketon.pages.museums;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -12,11 +12,11 @@ import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class SessionThatrePlayPage extends SessionPage {
-    private SelenideElement freeSeatButton = $x("//div[@style='color: rgb(255, 255, 255);']");
+public class SessionMuseumOldFormPage extends SessionPage {
+
     private SelenideElement fullDataSession = $x("//div[@class='timeAndPlace']");
-    private ElementsCollection tickets = $$x("//div[@class='ticketWrapper desktopTicket']");
-    private SelenideElement sectorOfHall = $("path[stroke='#00bbff']");
+    private ElementsCollection ticketsWithoutPlace = $$x("//div[@class='ticketWrapper entryTicketComponent']");
+    private SelenideElement addTicketButton = $x("//button[@class='button secondary addTicketButton']");
 
     @Override
     public String getFullDataSessionActual() {
@@ -25,18 +25,19 @@ public class SessionThatrePlayPage extends SessionPage {
 
     @Override
     public int getTicketQantiti() {
-        return tickets.size();
+        return ticketsWithoutPlace.size();
     }
 
     @Override
     public void deleteTicket() {
-        if (tickets.size() == 0) {
+        if (ticketsWithoutPlace.size() == 0) {
             throw new RuntimeException("Билетов с списке нет");
         }
-        tickets.get(0).$("img[alt='закрыть']").click();
+        ticketsWithoutPlace.get(0).$("img[alt='close']").click();
+        plaseInd--;
     }
 
-    public SessionThatrePlayPage(String titleExpect, String time, String day, String month, String movieTheatre) {
+    public SessionMuseumOldFormPage(String titleExpect, String time, String day, String month, String movieTheatre) {
         super(titleExpect, time, day, month, movieTheatre);
         titleActual = $x("//div[@class='title']");
         makingOrderButtom = $x("//button[@class='button primary']");
@@ -44,15 +45,14 @@ public class SessionThatrePlayPage extends SessionPage {
 
     @Override
     public void clickSeatAddTicket() {
-        if (sectorOfHall.exists()) {
-            sectorOfHall.click();
-            SleepUtils.sleepSeconds(6);
+        SleepUtils.sleepSeconds(5);
+        if (addTicketButton.exists()) {
+            tickeForm = TickeForm.WITHOUT_PLACE;
+            if (ticketsWithoutPlace.size() == plaseInd) {
+                addTicketButton.click();
+            }
+            plaseInd++;
         }
-
-        if (!freeSeatButton.exists()) {
-            throw new RuntimeException("Свободных мест нет");
-        }
-        freeSeatButton.click();
     }
 
     @Override

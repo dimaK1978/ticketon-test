@@ -2,7 +2,10 @@ package kz.ticketon.pages.concerts;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import kz.ticketon.SleepUtils;
+import kz.ticketon.pages.MakingOrderOldFormPage;
+import kz.ticketon.pages.MakingOrderPage;
 import kz.ticketon.pages.SessionPage;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -50,6 +53,7 @@ public class SessionConsertPage extends SessionPage {
     public SessionConsertPage(String titleExpect, String time, String day, String month, String movieTheatre) {
         super(titleExpect, time, day, month, movieTheatre);
         titleActual = $x("//div[@class='title']");
+        makingOrderButtom = $x("//button[@class='button primary']");
     }
 
     @Override
@@ -76,5 +80,12 @@ public class SessionConsertPage extends SessionPage {
                 plaseInd++;
             }
         }
+    }
+
+    @Override
+    @Step("переход к оформлению заказа")
+    public MakingOrderPage makingOrder(){
+        makingOrderButtom.click();
+        return new MakingOrderOldFormPage();
     }
 }

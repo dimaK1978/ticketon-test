@@ -2,6 +2,10 @@ package kz.ticketon.pages.cinema;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
+import kz.ticketon.pages.MakingOrderNewFormPage;
+import kz.ticketon.pages.MakingOrderOldFormPage;
+import kz.ticketon.pages.MakingOrderPage;
 import kz.ticketon.pages.SessionPage;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -9,7 +13,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class SessionMovieNewFormPage extends SessionPage {
 
     //элемент содержащий название кинотеатра
-    protected SelenideElement movieTheatreActual = movieTheatreActual = $x("//div[@class='s-i-in']");
+    protected SelenideElement movieTheatreActual = $x("//div[@class='s-i-in']");
     //элемент содержащий дату сеанса
     protected SelenideElement dateActual = $x("//div[@id='s-show']");
     private SelenideElement tickets = $x("//div[@id='s-seats']");
@@ -48,5 +52,13 @@ public class SessionMovieNewFormPage extends SessionPage {
     public SessionMovieNewFormPage(String titleExpect, String time, String day, String month, String movieTheatre) {
         super(titleExpect, time, day, month, movieTheatre);
         titleActual = $x("//div[@id='s-event']");
+        makingOrderButtom = $x("//a[@class='next']");
+    }
+
+    @Override
+    @Step("переход к оформлению заказа")
+    public MakingOrderPage makingOrder(){
+        makingOrderButtom.click();
+        return new MakingOrderNewFormPage();
     }
 }

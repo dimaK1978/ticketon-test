@@ -44,6 +44,7 @@ public abstract class EventPage extends BaseTemlatePage {
         return createSesionPage(time, day, month, eventLocation);
     }
 
+    @Step("Открытие модального окна выбора билетов в зависимости от формы")
     protected abstract SessionPage createSesionPage(
             final String time,
             final String day,

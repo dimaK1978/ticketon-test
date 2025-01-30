@@ -11,7 +11,9 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class EventMuseumPage extends EventPage {
 
-    private final SelenideElement frameFormChoosePlase = $("[id='widgetFrame']");
+    private final SelenideElement frameNewFormChooseTicket = $("[id='frame_ticketonWidgetContainer']");
+    private final SelenideElement frameOldFormChooseTicket = $("[id='widgetFrame']");
+
     public EventMuseumPage(final Cities city, final Languages language, final String title) {
         super(city, language, title);
         availableSessions = $$x("//div[@class='EventScheduleRow_eventScheduleRow__gQsT9']");
@@ -25,11 +27,14 @@ public class EventMuseumPage extends EventPage {
             final String month,
             final String eventLocation
     ) {
-        if (frameFormChoosePlase.exists()) {
-            switchTo().frame(frameFormChoosePlase);
-            return new SessionSportsPage(title, time, day, month, eventLocation);
+        if (frameOldFormChooseTicket.exists()) {
+            switchTo().frame(frameOldFormChooseTicket);
+            return new SessionMuseumOldFormPage(title, time, day, month, eventLocation);
+        } else if (frameNewFormChooseTicket.exists()) {
+            switchTo().frame(frameNewFormChooseTicket);
+            return new SessionMuseumNewFormPage(title, time, day, month, eventLocation);
         } else {
-            throw new RuntimeException("Форма для выбора мест на концерте не загрузилась");
+            throw new RuntimeException("Форма для выбора билетов не прогрузилась");
         }
     }
 
