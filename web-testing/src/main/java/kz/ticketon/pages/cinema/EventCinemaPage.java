@@ -36,7 +36,7 @@ public class EventCinemaPage extends EventPage {
             switchTo().frame(frameOldFormChoosePlase);
             return new SessionMovieOldFormPage(title, time, day, month, eventLocation);
         } else {
-            throw new RuntimeException("Форма для выбора мест в кинотеатре не загрузилась");
+            throw new RuntimeException("Форма для выбора билетов не загрузилась");
         }
     }
 }

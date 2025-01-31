@@ -25,7 +25,7 @@ public class MainPage extends BaseTemlatePage {
         super(city, language);
     }
 
-    @Step("открытие страницы")
+    @Step("Открытие главной страницы")
     public void openPage() {
         open(getPageUrlCityLanguage());
     }
@@ -56,8 +56,9 @@ public class MainPage extends BaseTemlatePage {
         return String.format("%s %s", baseTitle, getCityName());
     }
 
-    public SelenideElement getHeaderEventSchedule() {
-        return headerEventSchedule;
+    @Step("Получение актуального заголовка страницы")
+    public String getHeaderEventSchedule() {
+        return headerEventSchedule.getOwnText().trim();
     }
 
     public String getPageUrlCityLanguage() {

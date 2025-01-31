@@ -1,13 +1,13 @@
 package kz.ticketon.pages.cinema;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
+import kz.ticketon.SleepUtils;
 import kz.ticketon.pages.ChapterPage;
 import kz.ticketon.pages.EventPage;
 import org.openqa.selenium.By;
-
-import java.util.concurrent.TimeUnit;
 
 public class ChapterCinemaPage extends ChapterPage {
 
@@ -24,21 +24,18 @@ public class ChapterCinemaPage extends ChapterPage {
         super.pageTitleKz = pageTitleKz;
     }
     @Override
+    @Step("Клик на доступное событие")
     public EventPage clickEvent(final SelenideElement movie) {
-        final String titleMovie = movie.$(new By.ByTagName("a")).getAttribute("title");
+        final String titleMovie = movie.scrollTo().$(new By.ByTagName("a")).getAttribute("title");
         movie.scrollTo().click();
         return new EventCinemaPage(city, language, titleMovie);
     }
     @Override
     public EventPage clickFirstEvent() {
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        if (movieList.isEmpty()) {
+        SleepUtils.sleepSeconds(5);
+        if (eventList.isEmpty()) {
             throw new RuntimeException("Доступных фильмов нет");
         }
-        return clickEvent(movieList.first());
+        return clickEvent(eventList.first());
     }
 }

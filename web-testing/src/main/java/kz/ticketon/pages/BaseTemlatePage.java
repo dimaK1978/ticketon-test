@@ -28,6 +28,7 @@ public class BaseTemlatePage {
         this.city = city;
         this.language = language;
     }
+
     //элемент отображения и выбора языка
     private final SelenideElement accordeonLanguage = $x("//div[@class='Languages_wrapperLanguagesBtn__lv3IP']");
 
@@ -38,7 +39,7 @@ public class BaseTemlatePage {
     private final SelenideElement searchEventForm = $x("//input[@class='SearchInput_isEmpty__wgMBa']");
     private final SelenideElement findeButton = $x("//img[@src='/rrs/_next/static/media/loupe.11a27ae1.svg']");
 
-    @Step("смена языка")
+    @Step("Смена языка страницы")
     public void changeLanguage(Languages newLanguage) {
         if (newLanguage == language) {
             return;
@@ -51,7 +52,7 @@ public class BaseTemlatePage {
         this.language = newLanguage;
     }
 
-    @Step("смена города")
+    @Step("Смена города")
     public void changeSity(Cities newCity) {
         if (city == newCity) {
             return;
@@ -83,7 +84,7 @@ public class BaseTemlatePage {
         return accordeonCity.getOwnText();
     }
 
-    @Step("Получение названия города страницы")
+    @Step("Получение ожидаемого имени города страницы")
     public String getCityName() {
         return getCityName(city);
     }
@@ -130,7 +131,8 @@ public class BaseTemlatePage {
         return chapterPage;
     }
 
-   private String getCityName(Cities city) {
+    @Step("Имя города на языке страницы")
+    public String getCityName(Cities city) {
         String cityName;
         switch (language) {
             case ENG: {

@@ -36,9 +36,9 @@ public class ChapterChristmasEventPage extends ChapterPage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        if (movieList.isEmpty()) {
+        if (eventList.isEmpty()) {
             throw new RuntimeException("Доступных новогодних мероприятий нет");
         }
-        return clickEvent(movieList.first());
+        return clickEvent(eventList.first());
     }
 }

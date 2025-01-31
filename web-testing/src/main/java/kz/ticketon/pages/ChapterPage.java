@@ -17,25 +17,25 @@ public abstract class ChapterPage {
     protected String pageTitleRus;
     protected String pageTitleEng;
     protected String pageTitleKz;
-
     protected final SelenideElement pageTitle = $x("//div[@class='page-title']");
-    protected final ElementsCollection movieList = $$x("//div[@class='block-1 list-block']");
+    protected final ElementsCollection eventList = $$x("//div[@class='block-1 list-block']");
 
     public ChapterPage(Cities city, Languages language) {
         this.city = city;
         this.language = language;
     }
 
+    @Step("Открытие страницы выбранного основного раздела")
     public void openPage() {
         open(pageUrlCityLanguage());
     }
 
-    public SelenideElement getPageTitle() {
-        return pageTitle;
+    @Step("Получить актуальный заголовок страницы раздела")
+    public String getPageTitle() {
+        return pageTitle.getText();
     }
 
-
-
+    @Step("Получить ожидаемый полный URL страницы раздела")
     public String getShortPageUrl() {
         return shortPageUrl;
     }
@@ -44,6 +44,7 @@ public abstract class ChapterPage {
         this.shortPageUrl = shortPageUrl;
     }
 
+    @Step("Получить ожидаемый город страницы раздела")
     public Cities getCity() {
         return city;
     }
@@ -52,6 +53,7 @@ public abstract class ChapterPage {
         this.city = city;
     }
 
+    @Step("Получить ожидаемый язык страницы раздела")
     public Languages getLanguage() {
         return language;
     }
@@ -60,30 +62,31 @@ public abstract class ChapterPage {
         this.language = language;
     }
 
-    public String getPageTitleRus() {
+    protected String getPageTitleRus() {
         return pageTitleRus;
     }
 
-    public void setPageTitleRus(String pageTitleRus) {
+    protected void setPageTitleRus(String pageTitleRus) {
         this.pageTitleRus = pageTitleRus;
     }
 
-    public String getPageTitleEng() {
+    protected String getPageTitleEng() {
         return pageTitleEng;
     }
 
-    public void setPageTitleEng(String pageTitleEng) {
+    protected void setPageTitleEng(String pageTitleEng) {
         this.pageTitleEng = pageTitleEng;
     }
 
-    public String getPageTitleKz() {
+    protected String getPageTitleKz() {
         return pageTitleKz;
     }
 
-    public void setPageTitleKz(String pageTitleKz) {
+    protected void setPageTitleKz(String pageTitleKz) {
         this.pageTitleKz = pageTitleKz;
     }
 
+    @Step("Получить ожидаемый заголовок страницы раздела")
     public String getPageTitleExpected() {
         String title;
         switch (language) {
@@ -105,7 +108,6 @@ public abstract class ChapterPage {
         return String.format("%s/%s", mainPage.getPageUrlCityLanguage(), shortPageUrl);
     }
 
-    @Step("Клик на доступное событие")
     public abstract EventPage clickEvent(final SelenideElement movie);
 
     public abstract EventPage clickFirstEvent();

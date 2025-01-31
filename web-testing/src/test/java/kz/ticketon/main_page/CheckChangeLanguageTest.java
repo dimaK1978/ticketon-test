@@ -1,8 +1,12 @@
 package kz.ticketon.main_page;
 
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import kz.ticketon.BaseClassWebTest;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
+import kz.ticketon.pages.MainPage;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -11,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+@Feature("Работоспособность основных элемнтов главной страницы")
 public class CheckChangeLanguageTest extends BaseClassWebTest {
     // генерация исходных данных, перебор вариантов переключения языка
     static Stream<Object[]> languages() {
@@ -27,12 +32,19 @@ public class CheckChangeLanguageTest extends BaseClassWebTest {
         return list.stream();
     }
 
+    @Story("Проверка переключения языка главной страницы")
     @ParameterizedTest()
     @MethodSource(value = "languages()")
     public void checkChangeLanguage(
             final Languages startPageLanguage,
             final Languages newLanguage
     ) {
-        checkChangeLanguageMaim(startPageLanguage, newLanguage, Cities.NO_CITY);
+        SoftAssertions softAssertions = new SoftAssertions();
+        MainPage mainPage = new MainPage(Cities.NO_CITY, startPageLanguage);
+        mainPage.openPage();
+        mainPage.changeLanguage(newLanguage);
+        checkUrlPageCityLanguageMaim(mainPage, softAssertions);
+        checkViewLanguageMaim(mainPage, newLanguage, softAssertions);
+        softAssertions.assertAll();
     }
 }

@@ -1,4 +1,4 @@
-package kz.ticketon.pages.concerts;
+package kz.ticketon.pages.children;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -10,7 +10,7 @@ import kz.ticketon.pages.SessionPage;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class SessionConsertPage extends SessionPage {
+public class SessionChildrenOldFormPage extends SessionPage {
     private SelenideElement freeSeatButton = $x("//div[@style='color: rgb(255, 255, 255);']");
     private SelenideElement fullDataSession = $x("//div[@class='timeAndPlace']");
     private ElementsCollection tickets = $$x("//div[@class='ticketWrapper desktopTicket']");
@@ -50,7 +50,7 @@ public class SessionConsertPage extends SessionPage {
         }
     }
 
-    public SessionConsertPage(String titleExpect, String time, String day, String month, String movieTheatre) {
+    public SessionChildrenOldFormPage(String titleExpect, String time, String day, String month, String movieTheatre) {
         super(titleExpect, time, day, month, movieTheatre);
         titleActual = $x("//div[@class='title']");
         makingOrderButtom = $x("//button[@class='button primary']");
@@ -59,8 +59,11 @@ public class SessionConsertPage extends SessionPage {
     @Override
     public void clickSeatAddTicket() {
         if (addTicketButton.exists()) {
-            addTicketButton.click();
             tickeForm = TickeForm.WITHOUT_PLACE;
+            if (ticketsWithoutPlace.size() == plaseInd) {
+                addTicketButton.click();
+            }
+            plaseInd++;
         } else {
             if (sectorOfHall.exists()) {
                 sectorOfHall.click();
@@ -84,7 +87,7 @@ public class SessionConsertPage extends SessionPage {
 
     @Override
     @Step("переход к оформлению заказа")
-    public MakingOrderPage makingOrder(){
+    public MakingOrderPage makingOrder() {
         makingOrderButtom.click();
         return new MakingOrderOldFormPage();
     }
