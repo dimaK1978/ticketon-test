@@ -9,6 +9,8 @@ import kz.ticketon.MainMenuButtonsMainPage;
 import kz.ticketon.pages.ChapterPage;
 import kz.ticketon.pages.MainPage;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Feature("Работоспособность основных элемнтов главной страницы")
-public class CheckMainMenyTest extends BaseClassWebTest {
+public class CheckMainMenuTest extends BaseClassWebTest {
     //генерация исходных данных для теста, комбинации возможных вариантов
     static Stream<Object[]> menuItemsAndCities() {
         List<Object[]> list = new ArrayList<>();
@@ -34,7 +36,7 @@ public class CheckMainMenyTest extends BaseClassWebTest {
     @Story("Проверка кликов кнопок разделов главного меню и переходов на страницы выбранных разделов, с учетом выбора города и языка")
     @ParameterizedTest()
     @MethodSource("menuItemsAndCities")
-    public void checkMainMenyOpenChapter(
+    public void checkMainMenuOpenChapter(
             final MainMenuButtonsMainPage menuItem,
             final Cities city,
             final Languages language) {
