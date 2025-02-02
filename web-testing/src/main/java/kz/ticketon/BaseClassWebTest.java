@@ -1,62 +1,123 @@
 package kz.ticketon;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
+import kz.ticketon.pages.*;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverConditions.url;
+import static com.codeborne.selenide.Selenide.webdriver;
 
 public class BaseClassWebTest extends BaseClassTest {
-
-    protected static String BASIC_URL = "https://ticketon.kz/";
-    protected static int TIME_OUT = 20000;
-
+    protected static int TIME_OUT = 100000;
 
     @BeforeAll
-    public static void setUppAll() {
+    public static void setUpAll() {
         Configuration.browserSize = "1280x800";
-        //  Configuration.pageLoadStrategy = "normal";
         Configuration.timeout = TIME_OUT;
-        Configuration.browserCapabilities =
-                new ChromeOptions().addArguments("--remote-allow-origins=*");
+        Configuration.browserCapabilities = new ChromeOptions().addArguments("--remote-allow-origins=*");
     }
 
-    @Step("Загрузка стартовой страницы")
-    public void openStartPage(final LanguagesMain language) {
-        open(BASIC_URL + language.getUrlString());
-        webdriver().shouldHave(url(BASIC_URL + language.getUrlString()));
+    @Step("Проверка заполнения формы события, выбора, добавление 2 билетов, удаления 1 билета, провека результата")
+    public void checkCreateSessionEventsAddAndDelTickets(final SessionPage sessionPage, final SoftAssertions softAssertions) {
+        final String titleExpectSession = sessionPage.getTitleExpect();
+        final String titleActualSession = sessionPage.getTitleActual();
+        softAssertions.assertThat(titleExpectSession).contains(titleActualSession);
+        final String fullDataSessionExpect = sessionPage.getFullDataSessionExpect();
+        final String fullDataSessionActual = sessionPage.getFullDataSessionActual();
+        softAssertions.assertThat(fullDataSessionActual).contains(fullDataSessionExpect);
+        softAssertions.assertThat(sessionPage.getTicketQantiti()).isEqualTo(1);
+        sessionPage.clickSeatAddTicket();
+        softAssertions.assertThat(sessionPage.getTicketQantiti()).isEqualTo(2);
+        sessionPage.deleteTicket();
+        softAssertions.assertThat(sessionPage.getTicketQantiti()).isEqualTo(1);
     }
 
-    @Step("Загрузка стартовой страницы на русском")
-    public void openStartPageRus() {
-        openStartPage(LanguagesMain.RUS);
+    @Step("Проверка заголовка страницы события, его соотвеьсвие выбранному")
+    public void checkEventPageTitle(final EventPage eventPage, final SoftAssertions softAssertions) {
+        final String titleExpectEventPage = eventPage.getTitleExpect();
+        final String titleActualEventPage = eventPage.getTitleActual();
+        softAssertions.assertThat(titleActualEventPage).isEqualTo(titleExpectEventPage);
     }
 
-    @Step("Загрузка стартовой страницы на английском")
-    public void openStartPageEng() {
-        openStartPage(LanguagesMain.ENG);
+    @Step("Проверка перехода к оформлению заказа")
+    public void checkMakingOrdere(final SessionPage sessionPage, final SoftAssertions softAssertions) {
+        MakingOrderPage makingOrderPage = sessionPage.makingOrder();
+        final String titleExpect = makingOrderPage.getTitleExpected();
+        final String titleActual = makingOrderPage.getTitleActual();
+        softAssertions.assertThat(titleActual).contains(titleExpect);
     }
 
-    @Step("Загрузка стартовой страницы на казахском")
-    public void openStartPageKz() {
-        openStartPage(LanguagesMain.KZ);
+    @Step("Проверка нахождения страницы по заголовку в результатах поиска")
+    public void checkSearchEventsByTitle(
+            final MainPage mainPage,
+            final String eventTitle,
+            final SoftAssertions softAssertions
+    ) {
+        SearchResultPage searchResultPage = mainPage.searchEvent(eventTitle);
+        softAssertions.assertThat(searchResultPage.eventIsExists(eventTitle)).isTrue();
     }
 
-    @Step("Выбор пунката главного меню")
-    public void chooseMaimMenu(final MaimMenuMain menuItem, final LanguagesMain language) {
-        openStartPage(language);
-        $x(menuItem.getXpathWeb()).click();
-        webdriver().shouldHave(url(BASIC_URL + language.getUrlString() + menuItem.getUrlWebUnderBasic()));
+    @Step("Проверка соответсвия заголовка открывшейся страницы выбранного раздела ожиданиям")
+    public void checkChapterTitle(
+            final ChapterPage chapterPage,
+            final SoftAssertions softAssertions
+    ) {
+        softAssertions
+                .assertThat(chapterPage.getPageTitle())
+                .isEqualTo(chapterPage.getPageTitleExpected());
+
     }
 
+    @Step("Проверка URL главной страницы для выбранного города и языка")
+    public void checkUrlPageCityLanguageMaim(
+            final MainPage mainPage,
+            final SoftAssertions softAssertions
+    ) {
+        SleepUtils.sleepSeconds(5);
+        softAssertions
+                .assertThat(webdriver().driver().url())
+                .contains(mainPage.getPageUrlCityLanguage());
+    }
 
-    @Step("Выбор языка на главной странице")
-    public void chooseLanguageMaim(final LanguagesMain language) {
-        openStartPageRus();
-        $x("/html/body/div[1]/div/header/div[1]/div[3]/div[2]/div[1]").click();
-        $x(language.getWebXpath()).click();
-        webdriver().shouldHave(url(BASIC_URL + language.getUrlString()));
+    public void checkViewLanguageMaim(
+            final MainPage mainPage,
+            final Languages language,
+            final SoftAssertions softAssertions
+    ) {
+        softAssertions
+                .assertThat(mainPage.getActualShowCity())
+                .isEqualTo(language.getDisplyName());
+
+    }
+
+    @Step("Проверка имени города отображаемого на странице")
+    public void checkViewCityMaim(
+            final MainPage mainPage,
+            final Cities city,
+            final SoftAssertions softAssertions
+    ) {
+        softAssertions
+                .assertThat(mainPage.getActualShowCity())
+                .isEqualTo(mainPage.getCityName(city));
+    }
+
+    @Step("Проверка отображения имени города в заголовке страницы")
+    public void checkViewCityTitleMaim(
+            final MainPage mainPage,
+            final Cities city,
+            final SoftAssertions softAssertions
+    ) {
+        softAssertions
+                .assertThat(mainPage.getHeaderEventSchedule())
+                .contains(mainPage.getCityName(city));
+    }
+
+    @AfterEach
+    public void tearDownBrowser() {
+        Selenide.closeWebDriver();
     }
 }
