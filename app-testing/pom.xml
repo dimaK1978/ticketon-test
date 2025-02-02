@@ -21,13 +21,12 @@
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
             <version>8.3.0</version>
-
         </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-remote-driver</artifactId>
-            <version>4.13.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.seleniumhq.selenium</groupId>-->
+<!--            <artifactId>selenium-remote-driver</artifactId>-->
+<!--            <version>4.13.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide</artifactId>
