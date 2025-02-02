@@ -37,6 +37,7 @@
             <version>5.9.3</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
