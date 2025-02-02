@@ -42,7 +42,6 @@ public class CheckBuyTicketSportsTest extends BaseClassWebTest {
         final EventSportsPage sportGame = (EventSportsPage) sportsPage.clickFirstEvent();
         checkEventPageTitle(sportGame, softAssertions);
         final SessionPage sessionSportGame = sportGame.getFirstSessionEvent();
-        sessionSportGame.clickSeatAddTicket();
         checkCreateSessionEventsAddAndDelTickets(sessionSportGame, softAssertions);
         checkMakingOrdere(sessionSportGame, softAssertions);
         softAssertions.assertAll();

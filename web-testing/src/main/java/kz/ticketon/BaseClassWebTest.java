@@ -23,32 +23,30 @@ public class BaseClassWebTest extends BaseClassTest {
 
     @Step("Проверка заполнения формы события, выбора, добавление 2 билетов, удаления 1 билета, провека результата")
     public void checkCreateSessionEventsAddAndDelTickets(final SessionPage sessionPage, final SoftAssertions softAssertions) {
-        final String titleExpectSession = sessionPage.getTitleExpect();
-        final String titleActualSession = sessionPage.getTitleActual();
-        softAssertions.assertThat(titleExpectSession).contains(titleActualSession);
-        final String fullDataSessionExpect = sessionPage.getFullDataSessionExpect();
-        final String fullDataSessionActual = sessionPage.getFullDataSessionActual();
-        softAssertions.assertThat(fullDataSessionActual).contains(fullDataSessionExpect);
-        softAssertions.assertThat(sessionPage.getTicketQantiti()).isEqualTo(1);
+        checkTitleSession(sessionPage, softAssertions);
+        checkFullDataSession(sessionPage, softAssertions);
         sessionPage.clickSeatAddTicket();
-        softAssertions.assertThat(sessionPage.getTicketQantiti()).isEqualTo(2);
+        checkTicketsQantiti(sessionPage, 1, softAssertions);
+        sessionPage.clickSeatAddTicket();
+        checkTicketsQantiti(sessionPage, 2, softAssertions);
         sessionPage.deleteTicket();
-        softAssertions.assertThat(sessionPage.getTicketQantiti()).isEqualTo(1);
+        checkTicketsQantiti(sessionPage, 1, softAssertions);
+
     }
 
     @Step("Проверка заголовка страницы события, его соотвеьсвие выбранному")
     public void checkEventPageTitle(final EventPage eventPage, final SoftAssertions softAssertions) {
-        final String titleExpectEventPage = eventPage.getTitleExpect();
-        final String titleActualEventPage = eventPage.getTitleActual();
-        softAssertions.assertThat(titleActualEventPage).isEqualTo(titleExpectEventPage);
+        softAssertions
+                .assertThat(eventPage.getTitleActual())
+                .isEqualTo(eventPage.getTitleExpect());
     }
 
     @Step("Проверка перехода к оформлению заказа")
     public void checkMakingOrdere(final SessionPage sessionPage, final SoftAssertions softAssertions) {
         MakingOrderPage makingOrderPage = sessionPage.makingOrder();
-        final String titleExpect = makingOrderPage.getTitleExpected();
-        final String titleActual = makingOrderPage.getTitleActual();
-        softAssertions.assertThat(titleActual).contains(titleExpect);
+        softAssertions
+                .assertThat(makingOrderPage.getTitleActual())
+                .contains(makingOrderPage.getTitleExpected());
     }
 
     @Step("Проверка нахождения страницы по заголовку в результатах поиска")
@@ -69,7 +67,6 @@ public class BaseClassWebTest extends BaseClassTest {
         softAssertions
                 .assertThat(chapterPage.getPageTitle())
                 .isEqualTo(chapterPage.getPageTitleExpected());
-
     }
 
     @Step("Проверка URL главной страницы для выбранного города и языка")
@@ -114,6 +111,31 @@ public class BaseClassWebTest extends BaseClassTest {
         softAssertions
                 .assertThat(mainPage.getHeaderEventSchedule())
                 .contains(mainPage.getCityName(city));
+    }
+
+    @Step("Проверка количества выбранных билетов")
+    public void checkTicketsQantiti(
+            final SessionPage sessionPage,
+            final int expectedQantiti,
+            final SoftAssertions softAssertions
+    ) {
+        softAssertions
+                .assertThat(sessionPage.getTicketQantiti())
+                .isEqualTo(expectedQantiti);
+    }
+
+    @Step("Проверка правильности заполнения времени, даты и места проведения сейнса выбранного события")
+    public void checkFullDataSession(final SessionPage sessionPage, final SoftAssertions softAssertions) {
+        softAssertions
+                .assertThat(sessionPage.getFullDataSessionActual())
+                .contains(sessionPage.getFullDataSessionExpect());
+    }
+
+    @Step("Проверка правильности заполнения заголовка события в форме выборе билетов")
+    public void checkTitleSession(final SessionPage sessionPage, final SoftAssertions softAssertions) {
+        softAssertions
+                .assertThat(sessionPage.getTitleExpect())
+                .contains(sessionPage.getTitleActual());
     }
 
     @AfterEach

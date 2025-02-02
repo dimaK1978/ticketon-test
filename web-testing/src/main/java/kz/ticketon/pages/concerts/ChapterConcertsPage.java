@@ -11,11 +11,9 @@ import org.openqa.selenium.By;
 
 public class ChapterConcertsPage extends ChapterPage {
     private final String shortPageUrl = "concerts";
-
     protected final String pageTitleRus = "Билеты на концерт";
     protected final String pageTitleEng = "Concert tickets";
     protected final String pageTitleKz = "Концертке билеттер";
-
 
     public ChapterConcertsPage(Cities city, Languages language) {
         super(city, language);

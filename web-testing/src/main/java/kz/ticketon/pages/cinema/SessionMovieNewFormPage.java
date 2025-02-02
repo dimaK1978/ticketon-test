@@ -19,22 +19,26 @@ public class SessionMovieNewFormPage extends SessionPage {
     private SelenideElement tickets = $x("//div[@id='s-seats']");
 
     private ElementsCollection freeSeatButtons = $$x("//i[@class='mask ']");
-  private int plaseInd = 0;
+    private int plaseInd = 0;
 
-   @Override
+    @Step("Клик на свободное место в зале - добавление билета")
+    @Override
     public void clickSeatAddTicket() {
-        if (freeSeatButtons.isEmpty()|| plaseInd >= freeSeatButtons.size() ) {
+        if (freeSeatButtons.isEmpty() || plaseInd >= freeSeatButtons.size()) {
             throw new RuntimeException("Свободных мест нет");
         }
-       freeSeatButtons.get(plaseInd).click();
-       plaseInd++;
+        freeSeatButtons.get(plaseInd).click();
+        plaseInd++;
     }
+
+    @Step("Удаление выбранного билета")
     @Override
-    public void deleteTicket(){
+    public void deleteTicket() {
         plaseInd--;
         freeSeatButtons.get(plaseInd).click();
     }
 
+    @Step("Получение текста данных о сеансе с временем, датой и местом проведения из открывшейся формы")
     @Override
     public String getFullDataSessionActual() {
         return String.format(
@@ -42,6 +46,7 @@ public class SessionMovieNewFormPage extends SessionPage {
                 movieTheatreActual.getOwnText());
     }
 
+    @Step("Получение количества выбранных билетов")
     @Override
     public int getTicketQantiti() {
         if (!tickets.exists()) {
@@ -49,6 +54,7 @@ public class SessionMovieNewFormPage extends SessionPage {
         }
         return Integer.parseInt(tickets.getOwnText().split(" ")[0]);
     }
+
     public SessionMovieNewFormPage(String titleExpect, String time, String day, String month, String movieTheatre) {
         super(titleExpect, time, day, month, movieTheatre);
         titleActual = $x("//div[@id='s-event']");
@@ -57,7 +63,7 @@ public class SessionMovieNewFormPage extends SessionPage {
 
     @Override
     @Step("переход к оформлению заказа")
-    public MakingOrderPage makingOrder(){
+    public MakingOrderPage makingOrder() {
         makingOrderButtom.click();
         return new MakingOrderNewFormPage();
     }

@@ -19,11 +19,13 @@ public class SessionConsertOldFormPage extends SessionPage {
     private SelenideElement sectorOfHall = $("path[stroke='#00bbff']");
     private SelenideElement addTicketButton = $x("//button[@class='button secondary addTicketButton']");
 
+    @Step("Получение текста данных о сеансе с временем, датой и местом проведения из открывшейся формы")
     @Override
     public String getFullDataSessionActual() {
         return fullDataSession.getText();
     }
 
+    @Step("Получение количества выбранных билетов")
     @Override
     public int getTicketQantiti() {
         if (tickeForm == TickeForm.WITH_PLACE) {
@@ -33,6 +35,7 @@ public class SessionConsertOldFormPage extends SessionPage {
         }
     }
 
+    @Step("Удаление выбранного билета")
     @Override
     public void deleteTicket() {
         if (tickeForm == TickeForm.WITH_PLACE) {
@@ -56,6 +59,7 @@ public class SessionConsertOldFormPage extends SessionPage {
         makingOrderButtom = $x("//button[@class='button primary']");
     }
 
+    @Step("Клик на свободное место в зале - добавление билета")
     @Override
     public void clickSeatAddTicket() {
         if (addTicketButton.exists()) {
@@ -83,12 +87,5 @@ public class SessionConsertOldFormPage extends SessionPage {
                 plaseInd++;
             }
         }
-    }
-
-    @Override
-    @Step("переход к оформлению заказа")
-    public MakingOrderPage makingOrder() {
-        makingOrderButtom.click();
-        return new MakingOrderOldFormPage();
     }
 }

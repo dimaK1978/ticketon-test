@@ -1,6 +1,7 @@
 package kz.ticketon.pages.cinema;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
 import kz.ticketon.pages.EventPage;
@@ -17,7 +18,7 @@ public class EventCinemaPage extends EventPage {
         availableSessions = $$x("//div[@class='ScheduleRow_scheduleRow__o3xf2']");
         stringForFindLocation = "div[class='CinemaInfo_cinemaName___Escv']";
     }
-
+    @Step("Открытие модального окна выбора билетов в зависимости от формы")
     @Override
     protected SessionPage createSesionPage(
             final String time,

@@ -4,30 +4,29 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import kz.ticketon.SleepUtils;
-import kz.ticketon.pages.MakingOrderOldFormPage;
-import kz.ticketon.pages.MakingOrderPage;
 import kz.ticketon.pages.SessionPage;
 
-import java.util.concurrent.TimeUnit;
-
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$$x;
+import static com.codeborne.selenide.Selenide.$x;
 
 public class SessionMuseumOldFormPage extends SessionPage {
-
     private SelenideElement fullDataSession = $x("//div[@class='timeAndPlace']");
     private ElementsCollection ticketsWithoutPlace = $$x("//div[@class='ticketWrapper entryTicketComponent']");
     private SelenideElement addTicketButton = $x("//button[@class='button secondary addTicketButton']");
 
+    @Step("Получение текста данных о сеансе с временем, датой и местом проведения из открывшейся формы")
     @Override
     public String getFullDataSessionActual() {
         return fullDataSession.getText();
     }
 
+    @Step("Получение количества выбранных билетов")
     @Override
     public int getTicketQantiti() {
         return ticketsWithoutPlace.size();
     }
 
+    @Step("Удаление выбранного билета")
     @Override
     public void deleteTicket() {
         if (ticketsWithoutPlace.size() == 0) {
@@ -43,6 +42,7 @@ public class SessionMuseumOldFormPage extends SessionPage {
         makingOrderButtom = $x("//button[@class='button primary']");
     }
 
+    @Step("Клик на свободное место в зале - добавление билета")
     @Override
     public void clickSeatAddTicket() {
         SleepUtils.sleepSeconds(5);
@@ -53,12 +53,5 @@ public class SessionMuseumOldFormPage extends SessionPage {
             }
             plaseInd++;
         }
-    }
-
-    @Override
-    @Step("переход к оформлению заказа")
-    public MakingOrderPage makingOrder(){
-        makingOrderButtom.click();
-        return new MakingOrderOldFormPage();
     }
 }
