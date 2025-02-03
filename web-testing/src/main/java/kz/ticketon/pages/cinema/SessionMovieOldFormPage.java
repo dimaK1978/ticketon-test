@@ -14,16 +14,19 @@ public class SessionMovieOldFormPage extends SessionPage {
     private SelenideElement fullDataSession = $x("//div[@class='timeAndPlace']");
     private ElementsCollection tickets = $$x("//div[@class='ticketWrapper desktopTicket']");
 
+    @Step("Получение текста данных о сеансе с временем, датой и местом проведения из открывшейся формы")
     @Override
     public String getFullDataSessionActual() {
         return fullDataSession.getText();
     }
 
+    @Step("Получение количества выбранных билетов")
     @Override
     public int getTicketQantiti() {
         return tickets.size();
     }
 
+    @Step("Удаление выбранного билета")
     @Override
     public void deleteTicket() {
         if (tickets.size() == 0) {
@@ -38,18 +41,12 @@ public class SessionMovieOldFormPage extends SessionPage {
         makingOrderButtom = $x("//button[@class='button primary']");
     }
 
+    @Step("Клик на свободное место в зале - добавление билета")
     @Override
     public void clickSeatAddTicket() {
         if (!freeSeatButton.exists()) {
             throw new RuntimeException("Свободных мест нет");
         }
         freeSeatButton.click();
-    }
-
-    @Override
-    @Step("переход к оформлению заказа")
-    public MakingOrderPage makingOrder() {
-        makingOrderButtom.click();
-        return new MakingOrderOldFormPage();
     }
 }

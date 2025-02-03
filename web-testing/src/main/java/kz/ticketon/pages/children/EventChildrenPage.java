@@ -1,6 +1,7 @@
 package kz.ticketon.pages.children;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
 import kz.ticketon.pages.EventPage;
@@ -18,7 +19,7 @@ public class EventChildrenPage extends EventPage {
         availableSessions = $$x("//div[@class='EventScheduleRow_eventScheduleRow__gQsT9']");
         stringForFindLocation = "div[class='Place_placeWrapper__XP_Ng']";
     }
-
+    @Step("Открытие модального окна выбора билетов в зависимости от формы")
     @Override
     protected SessionPage createSesionPage(
             final String time,

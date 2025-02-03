@@ -30,7 +30,7 @@ public class CheckBuyTicketMovieTest extends BaseClassWebTest {
         return list.stream();
     }
 
-    @Story(("Проверка перехода к форме покупки билетов в кино на доступный фильм"))
+    @Story(("Проверка выбора и приобретения билетов в кино на доступный фильм"))
     @ParameterizedTest()
     @MethodSource(value = "cities()")
     public void checkBuyTicketMovie(Cities city) {
@@ -41,7 +41,6 @@ public class CheckBuyTicketMovieTest extends BaseClassWebTest {
         final EventCinemaPage movie = (EventCinemaPage) pageCinema.clickFirstEvent();
         checkEventPageTitle(movie, softAssertions);
         final SessionPage sessionMovie = movie.getFirstSessionEvent();
-        sessionMovie.clickSeatAddTicket();
         checkCreateSessionEventsAddAndDelTickets(sessionMovie, softAssertions);
         checkMakingOrdere(sessionMovie, softAssertions);
         softAssertions.assertAll();

@@ -1,16 +1,15 @@
 package kz.ticketon.pages.museums;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
 import kz.ticketon.pages.EventPage;
 import kz.ticketon.pages.SessionPage;
-import kz.ticketon.pages.sports.SessionSportsPage;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class EventMuseumPage extends EventPage {
-
     private final SelenideElement frameNewFormChooseTicket = $("[id='frame_ticketonWidgetContainer']");
     private final SelenideElement frameOldFormChooseTicket = $("[id='widgetFrame']");
 
@@ -20,6 +19,7 @@ public class EventMuseumPage extends EventPage {
         stringForFindLocation = "div[class='Place_placeWrapper__XP_Ng']";
     }
 
+    @Step("Открытие модального окна выбора билетов в зависимости от формы")
     @Override
     protected SessionPage createSesionPage(
             final String time,
@@ -37,5 +37,4 @@ public class EventMuseumPage extends EventPage {
             throw new RuntimeException("Форма для выбора билетов не прогрузилась");
         }
     }
-
 }

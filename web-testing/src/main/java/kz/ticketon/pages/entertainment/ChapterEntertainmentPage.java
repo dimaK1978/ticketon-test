@@ -12,11 +12,9 @@ import org.openqa.selenium.By;
 
 public class ChapterEntertainmentPage extends ChapterPage {
     private final String shortPageUrl = "entertainment";
-
     protected final String pageTitleRus = "Развлечения";
     protected final String pageTitleEng = "Entertainment";
     protected final String pageTitleKz = "Ойын-сауықтар";
-
 
     public ChapterEntertainmentPage(Cities city, Languages language) {
         super(city, language);
@@ -25,6 +23,7 @@ public class ChapterEntertainmentPage extends ChapterPage {
         super.pageTitleEng = pageTitleEng;
         super.pageTitleKz = pageTitleKz;
     }
+
     @Override
     @Step("Клик на доступное событие")
     public EventPage clickEvent(final SelenideElement movie) {
@@ -32,6 +31,7 @@ public class ChapterEntertainmentPage extends ChapterPage {
         movie.scrollTo().click();
         return new EventConcertsPage(city, language, titleMovie);
     }
+
     @Override
     public EventPage clickFirstEvent() {
         SleepUtils.sleepSeconds(5);

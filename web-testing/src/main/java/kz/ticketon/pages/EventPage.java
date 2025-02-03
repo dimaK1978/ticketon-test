@@ -8,8 +8,6 @@ import kz.ticketon.Languages;
 import kz.ticketon.SleepUtils;
 import org.openqa.selenium.By;
 
-import java.util.concurrent.TimeUnit;
-
 import static com.codeborne.selenide.Selenide.$x;
 
 public abstract class EventPage extends BaseTemlatePage {
@@ -17,7 +15,6 @@ public abstract class EventPage extends BaseTemlatePage {
     protected final String title;
     protected ElementsCollection availableSessions;
     protected String stringForFindLocation;
-
     protected final SelenideElement titleEvent = $x("//h1");
 
     public EventPage(final Cities city, final Languages language, final String title) {
@@ -40,11 +37,10 @@ public abstract class EventPage extends BaseTemlatePage {
         final String month = selenideElement.find("div[class='Date_dateText__h6416']").$(new By.ByTagName("div")).getText();
         final String eventLocation = selenideElement.find(stringForFindLocation).getText();
         buttonSession.scrollTo().click();
-        SleepUtils.sleepSeconds(20);
+        SleepUtils.sleepSeconds(15);
         return createSesionPage(time, day, month, eventLocation);
     }
 
-    @Step("Открытие модального окна выбора билетов в зависимости от формы")
     protected abstract SessionPage createSesionPage(
             final String time,
             final String day,

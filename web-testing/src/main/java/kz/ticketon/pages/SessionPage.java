@@ -13,10 +13,8 @@ public abstract class SessionPage {
     protected final String month;
     protected final String eventLocation;
     protected List<String> seats;
-    //элемент содержащий заголовке формы с названием события
     protected SelenideElement titleActual;
     protected SelenideElement makingOrderButtom;
-
     protected TickeForm tickeForm = TickeForm.WITH_PLACE;
     protected int plaseInd = 0;
 
@@ -29,10 +27,8 @@ public abstract class SessionPage {
         seats = new ArrayList<>();
     }
 
-    @Step("Клик на свободное место в зале - добавление билета")
     public abstract void clickSeatAddTicket();
 
-    @Step("Удаление выбранного билета")
     public abstract void deleteTicket();
 
     @Step("Получение текста актуального заголовка открывшейся формы с названием события")
@@ -50,14 +46,16 @@ public abstract class SessionPage {
         return String.format("%s %s в %s, %s", day, month, time, eventLocation);
     }
 
-    @Step("Получение текста данных о сеансе с временем, датой и местом проведения из открывшейся формы")
     public abstract String getFullDataSessionActual();
 
-    @Step("Получение количества выбранных билетов")
     public abstract int getTicketQantiti();
 
+
     @Step("переход к оформлению заказа")
-    public abstract MakingOrderPage makingOrder();
+    public MakingOrderPage makingOrder() {
+        makingOrderButtom.click();
+        return new MakingOrderOldFormPage();
+    }
 
     protected enum TickeForm {
         WITH_PLACE,

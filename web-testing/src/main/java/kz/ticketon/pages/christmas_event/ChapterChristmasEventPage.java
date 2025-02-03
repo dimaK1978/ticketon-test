@@ -1,6 +1,7 @@
 package kz.ticketon.pages.christmas_event;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
 import kz.ticketon.pages.ChapterPage;
@@ -23,12 +24,14 @@ public class ChapterChristmasEventPage extends ChapterPage {
         super.pageTitleEng = pageTitleEng;
         super.pageTitleKz = pageTitleKz;
     }
+
     @Override
     public EventPage clickEvent(final SelenideElement movie) {
         final String titleMovie = movie.$(new By.ByTagName("a")).getAttribute("title");
         movie.scrollTo().click();
         return new EventCinemaPage(city, language, titleMovie);
     }
+
     @Override
     public EventPage clickFirstEvent() {
         try {
@@ -37,7 +40,7 @@ public class ChapterChristmasEventPage extends ChapterPage {
             throw new RuntimeException(e);
         }
         if (eventList.isEmpty()) {
-            throw new RuntimeException("Доступных новогодних мероприятий нет");
+            throw new RuntimeException("Доступных мероприятий нет");
         }
         return clickEvent(eventList.first());
     }

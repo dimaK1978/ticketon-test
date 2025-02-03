@@ -41,7 +41,6 @@ public class CheckBuyTicketMuseumsTest extends BaseClassWebTest {
         final EventMuseumPage museumTour = (EventMuseumPage) museumPagePage.clickFirstEvent();
         checkEventPageTitle(museumTour, softAssertions);
         final SessionPage sessionMuseumTour = museumTour.getFirstSessionEvent();
-        sessionMuseumTour.clickSeatAddTicket();
         checkCreateSessionEventsAddAndDelTickets(sessionMuseumTour, softAssertions);
         checkMakingOrdere(sessionMuseumTour, softAssertions);
         softAssertions.assertAll();

@@ -10,8 +10,6 @@ import kz.ticketon.pages.MainPage;
 import kz.ticketon.pages.SessionPage;
 import kz.ticketon.pages.children.ChapterChildrenPage;
 import kz.ticketon.pages.children.EventChildrenPage;
-import kz.ticketon.pages.theatres.ChapterTheatresPage;
-import kz.ticketon.pages.theatres.EventTheatresPage;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -22,7 +20,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Feature("Выбор и приобремение билетов")
-public class CheckBuyTicketCildrenTest extends BaseClassWebTest {
+public class CheckBuyTicketChildrenTest extends BaseClassWebTest {
 
     static Stream<Object[]> cities() {
         List<Object[]> list = new ArrayList<>();
@@ -43,7 +41,6 @@ public class CheckBuyTicketCildrenTest extends BaseClassWebTest {
         final EventChildrenPage theatrePlay = (EventChildrenPage) theatresPage.clickFirstEvent();
         checkEventPageTitle(theatrePlay, softAssertions);
         final SessionPage sessionChildrenActivity = theatrePlay.getFirstSessionEvent();
-        sessionChildrenActivity.clickSeatAddTicket();
         checkCreateSessionEventsAddAndDelTickets(sessionChildrenActivity, softAssertions);
         checkMakingOrdere(sessionChildrenActivity, softAssertions);
         softAssertions.assertAll();

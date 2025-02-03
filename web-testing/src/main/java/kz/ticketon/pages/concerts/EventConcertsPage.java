@@ -1,11 +1,11 @@
 package kz.ticketon.pages.concerts;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
 import kz.ticketon.pages.EventPage;
 import kz.ticketon.pages.SessionPage;
-import kz.ticketon.pages.museums.SessionMuseumNewFormPage;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -19,6 +19,7 @@ public class EventConcertsPage extends EventPage {
         stringForFindLocation = "div[class='Place_placeWrapper__XP_Ng']";
     }
 
+    @Step("Открытие модального окна выбора билетов в зависимости от формы")
     @Override
     protected SessionPage createSesionPage(
             final String time,
@@ -33,5 +34,4 @@ public class EventConcertsPage extends EventPage {
             throw new RuntimeException("Форма для выбора билетов не загрузилась");
         }
     }
-
 }

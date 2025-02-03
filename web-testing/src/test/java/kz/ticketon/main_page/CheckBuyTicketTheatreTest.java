@@ -41,7 +41,6 @@ public class CheckBuyTicketTheatreTest extends BaseClassWebTest {
         final EventTheatresPage theatrePlay = (EventTheatresPage) theatresPage.clickFirstEvent();
         checkEventPageTitle(theatrePlay, softAssertions);
         final SessionPage sessionTheatrePlay = theatrePlay.getFirstSessionEvent();
-        sessionTheatrePlay.clickSeatAddTicket();
         checkCreateSessionEventsAddAndDelTickets(sessionTheatrePlay, softAssertions);
         checkMakingOrdere(sessionTheatrePlay, softAssertions);
         softAssertions.assertAll();
