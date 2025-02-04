@@ -36,7 +36,7 @@ public class CheckChangeCityTest extends BaseClassWebTest {
 
     @Story("Проверка переключения города главной страницы")
     @ParameterizedTest()
-    @MethodSource(value = "cities()")
+    @MethodSource("cities")
     public void checkChangeCityMaim(
             final Cities newCity,
             final Languages language

@@ -17,7 +17,6 @@ import java.util.stream.Stream;
 
 @Feature("Работоспособность основных элемнтов главной страницы")
 public class CheckChangeLanguageTest extends BaseClassWebTest {
-    // генерация исходных данных, перебор вариантов переключения языка
     static Stream<Object[]> languages() {
         List<Object[]> list = new ArrayList<>();
         Arrays.asList(Languages.values()).forEach(
@@ -34,7 +33,7 @@ public class CheckChangeLanguageTest extends BaseClassWebTest {
 
     @Story("Проверка переключения языка главной страницы")
     @ParameterizedTest()
-    @MethodSource(value = "languages()")
+    @MethodSource("languages")
     public void checkChangeLanguage(
             final Languages startPageLanguage,
             final Languages newLanguage

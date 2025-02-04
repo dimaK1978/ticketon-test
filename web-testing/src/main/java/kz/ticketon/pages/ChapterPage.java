@@ -9,11 +9,9 @@ import kz.ticketon.Languages;
 import static com.codeborne.selenide.Selenide.*;
 
 public abstract class ChapterPage {
-
     protected String shortPageUrl;
     protected Cities city;
     protected Languages language;
-
     protected String pageTitleRus;
     protected String pageTitleEng;
     protected String pageTitleKz;

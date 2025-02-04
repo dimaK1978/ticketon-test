@@ -31,7 +31,6 @@ public class BaseClassWebTest extends BaseClassTest {
         checkTicketsQantiti(sessionPage, 2, softAssertions);
         sessionPage.deleteTicket();
         checkTicketsQantiti(sessionPage, 1, softAssertions);
-
     }
 
     @Step("Проверка заголовка страницы события, его соотвеьсвие выбранному")
@@ -80,15 +79,15 @@ public class BaseClassWebTest extends BaseClassTest {
                 .contains(mainPage.getPageUrlCityLanguage());
     }
 
+    @Step("Проверка языка отображаемого на странице")
     public void checkViewLanguageMaim(
             final MainPage mainPage,
             final Languages language,
             final SoftAssertions softAssertions
     ) {
         softAssertions
-                .assertThat(mainPage.getActualShowCity())
+                .assertThat(mainPage.getActualLanguageText())
                 .isEqualTo(language.getDisplyName());
-
     }
 
     @Step("Проверка имени города отображаемого на странице")

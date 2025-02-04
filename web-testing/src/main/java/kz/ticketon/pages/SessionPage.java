@@ -50,7 +50,6 @@ public abstract class SessionPage {
 
     public abstract int getTicketQantiti();
 
-
     @Step("переход к оформлению заказа")
     public MakingOrderPage makingOrder() {
         makingOrderButtom.click();

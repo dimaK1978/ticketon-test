@@ -32,7 +32,7 @@ public class CheckBuyTicketMovieTest extends BaseClassWebTest {
 
     @Story(("Проверка выбора и приобретения билетов в кино на доступный фильм"))
     @ParameterizedTest()
-    @MethodSource(value = "cities()")
+    @MethodSource("cities")
     public void checkBuyTicketMovie(Cities city) {
         SoftAssertions softAssertions = new SoftAssertions();
         final MainPage mainPage = new MainPage(city, Languages.RUS);

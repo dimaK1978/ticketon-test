@@ -8,17 +8,13 @@ import kz.ticketon.Languages;
 import static com.codeborne.selenide.Selenide.*;
 
 public class MainPage extends BaseTemlatePage {
-
     private final String BASIC_PAGE_URL = "https://ticketon.kz";
-
     private final String pageTitleRus = "Афиша событий";
     private final String pageTitleEng = "Event schedule";
     private final String pageTitleKz = "Оқиғалар постері";
-
-    //элемент заголовка страницы
     private final SelenideElement headerEventSchedule = $x("//h1[@class='Title_title__6QR87 Title_h1__YhWT1']");
-    private final SelenideElement event = $(
-            "div[class='DetailedCardHover_eventHover__kxTCp DetailedCardPoster_eventHover__bYnSD']")
+    private final SelenideElement event =
+            $("div[class='DetailedCardHover_eventHover__kxTCp DetailedCardPoster_eventHover__bYnSD']")
             .$("div[class='DetailedCardHover_eventHoverTitle__OpJPs']");
 
     public MainPage(Cities city, Languages language) {

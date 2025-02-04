@@ -31,11 +31,12 @@ public class ChapterPageTours extends ChapterPage {
         movie.scrollTo().click();
         return new EventCinemaPage(city, language, titleMovie);
     }
+    //заглушка, для данного раздела пока полной реализации нет
     @Override
     public EventPage clickFirstEvent() {
         SleepUtils.sleepSeconds(5);
         if (eventList.isEmpty()) {
-            throw new RuntimeException("Доступных фильмов нет");
+            throw new RuntimeException("Доступных мероприятий нет");
         }
         return clickEvent(eventList.first());
     }

@@ -20,7 +20,6 @@ import kz.ticketon.pages.tours.ChapterPageTours;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class BaseTemlatePage {
-
     protected Cities city;
     protected Languages language;
 
@@ -37,7 +36,8 @@ public class BaseTemlatePage {
 
     //элемент поиска событий
     private final SelenideElement searchEventForm = $x("//input[@class='SearchInput_isEmpty__wgMBa']");
-    private final SelenideElement findeButton = $x("//img[@src='/rrs/_next/static/media/loupe.11a27ae1.svg']");
+    //элемент кнопка запуска поиска событий
+    private final SelenideElement searchButton = $x("//img[@src='/rrs/_next/static/media/loupe.11a27ae1.svg']");
 
     @Step("Смена языка страницы")
     public void changeLanguage(Languages newLanguage) {
@@ -70,7 +70,7 @@ public class BaseTemlatePage {
         SleepUtils.sleepSeconds(5);
         searchEventForm.scrollTo().sendKeys(eventTitle);
         SleepUtils.sleepSeconds(5);
-        findeButton.click();
+        searchButton.click();
         return new SearchResultPage(city, language);
     }
 

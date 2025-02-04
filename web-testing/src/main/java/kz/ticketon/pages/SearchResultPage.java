@@ -10,6 +10,7 @@ import static com.codeborne.selenide.Selenide.$x;
 public class SearchResultPage extends BaseTemlatePage {
     private final String stringXpathSearchEvent =
             "//div[@class='DetailedCardInfo_eventTitle__7VjTp'  and contains(text(),'%s')]";
+
     public SearchResultPage(Cities city, Languages language) {
         super(city, language);
     }
@@ -20,7 +21,6 @@ public class SearchResultPage extends BaseTemlatePage {
                 stringXpathSearchEvent,
                 eventTitle
         ));
-
         return event.exists();
     }
 }
