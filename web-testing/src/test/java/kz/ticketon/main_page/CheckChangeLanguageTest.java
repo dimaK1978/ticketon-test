@@ -1,23 +1,22 @@
-//package kz.ticketon.main_page;
-//
-//import io.qameta.allure.Feature;
-//import io.qameta.allure.Story;
-//import kz.ticketon.BaseClassWebTest;
-//import kz.ticketon.Cities;
-//import kz.ticketon.Languages;
-//import kz.ticketon.pages.MainPage;
-//import org.assertj.core.api.SoftAssertions;
-//import org.junit.jupiter.params.ParameterizedTest;
-//import org.junit.jupiter.params.provider.MethodSource;
-//
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.List;
-//import java.util.stream.Stream;
-//
-//@Feature("Работоспособность основных элемнтов главной страницы")
-//public class CheckChangeLanguageTest extends BaseClassWebTest {
-//    // генерация исходных данных, перебор вариантов переключения языка
+package kz.ticketon.main_page;
+
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import kz.ticketon.BaseClassWebTest;
+import kz.ticketon.Cities;
+import kz.ticketon.Languages;
+import kz.ticketon.pages.MainPage;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+@Feature("Работоспособность основных элемнтов главной страницы")
+public class CheckChangeLanguageTest extends BaseClassWebTest {
 //    static Stream<Object[]> languages() {
 //        List<Object[]> list = new ArrayList<>();
 //        Arrays.asList(Languages.values()).forEach(
@@ -34,7 +33,7 @@
 //
 //    @Story("Проверка переключения языка главной страницы")
 //    @ParameterizedTest()
-//    @MethodSource(value = "languages")
+//    @MethodSource("languages")
 //    public void checkChangeLanguage(
 //            final Languages startPageLanguage,
 //            final Languages newLanguage
@@ -47,4 +46,4 @@
 //        checkViewLanguageMaim(mainPage, newLanguage, softAssertions);
 //        softAssertions.assertAll();
 //    }
-//}
+}

@@ -57,5 +57,4 @@ public abstract class EventPage extends BaseTemlatePage {
     public String getTitleExpect() {
         return title;
     }
-
 }

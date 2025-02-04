@@ -31,7 +31,7 @@ public class ChapterChristmasEventPage extends ChapterPage {
         movie.scrollTo().click();
         return new EventCinemaPage(city, language, titleMovie);
     }
-
+    //заглушка, для данного раздела пока полной реализации нет
     @Override
     public EventPage clickFirstEvent() {
         try {

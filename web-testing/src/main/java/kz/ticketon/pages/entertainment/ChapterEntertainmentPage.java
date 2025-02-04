@@ -31,7 +31,7 @@ public class ChapterEntertainmentPage extends ChapterPage {
         movie.scrollTo().click();
         return new EventConcertsPage(city, language, titleMovie);
     }
-
+    //заглушка, для данного раздела пока полной реализации нет
     @Override
     public EventPage clickFirstEvent() {
         SleepUtils.sleepSeconds(5);
