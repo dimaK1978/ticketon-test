@@ -36,7 +36,7 @@ public class ChapterMasterClassesPage extends ChapterPage {
     public EventPage clickFirstEvent() {
         SleepUtils.sleepSeconds(5);
         if (eventList.isEmpty()) {
-            throw new RuntimeException("Доступных концертов нет");
+            throw new RuntimeException("Доступных мероприятий нет");
         }
         return clickEvent(eventList.first());
     }

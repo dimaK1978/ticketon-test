@@ -1,7 +1,6 @@
 package kz.ticketon.main_page;
 
 import io.qameta.allure.Feature;
-import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import kz.ticketon.BaseClassWebTest;
 import kz.ticketon.Cities;
