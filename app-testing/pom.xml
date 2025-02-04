@@ -33,11 +33,17 @@
 <!--            <artifactId>selenide</artifactId>-->
 <!--            <version>6.5.1</version>-->
 <!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>io.appium</groupId>-->
-<!--            <artifactId>java-client</artifactId>-->
-<!--            <version>8.3.0</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>9.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide-appium</artifactId>
+            <version>7.7.1</version>
+        </dependency>
+
     </dependencies>
 
 </project>
