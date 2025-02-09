@@ -1,4 +1,4 @@
-package kz.ticketon.pages.theatres;
+package kz.ticketon.pages.sports;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -8,13 +8,15 @@ import kz.ticketon.pages.SessionPage;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class SessionThatrePlayPage extends SessionPage {
+public class SessionSportsOldFormPage extends SessionPage {
     private final SelenideElement freeSeatButton = $x("//div[@style='color: rgb(255, 255, 255);']");
     private final SelenideElement fullDataSession = $x("//div[@class='timeAndPlace']");
     private final ElementsCollection tickets = $$x("//div[@class='ticketWrapper desktopTicket']");
+    private final ElementsCollection ticketsWithoutPlace = $$x("//div[@class='ticketWrapper entryTicketComponent']");
     private final SelenideElement sectorOfHall = $("path[stroke='#00bbff']");
+    private final SelenideElement addTicketButton = $x("//button[@class='button secondary addTicketButton']");
 
-    public SessionThatrePlayPage(String titleExpect, String time, String day, String month, String movieTheatre) {
+    public SessionSportsOldFormPage(String titleExpect, String time, String day, String month, String movieTheatre) {
         super(titleExpect, time, day, month, movieTheatre);
         titleActual = $x("//div[@class='title']");
         makingOrderButtom = $x("//button[@class='button primary']");
@@ -38,22 +40,42 @@ public class SessionThatrePlayPage extends SessionPage {
         if (qantitiOfSelectedPlaces == 0) {
             throw new RuntimeException("Билетов с списке нет");
         }
-        tickets.get(0).$("img[alt='закрыть']").click();
-        qantitiOfSelectedPlaces--;
+        if (tickeForm == TickeForm.WITH_PLACE) {
+            tickets.get(0).$("img[alt='закрыть']").click();
+            qantitiOfSelectedPlaces--;
+        } else {
+            ticketsWithoutPlace.get(0).$("img[alt='close']").click();
+            qantitiOfSelectedPlaces--;
+        }
     }
 
     @Step("Клик на свободное место в зале - добавление билета")
     @Override
     public void clickSeatAddTicket() {
-        if (sectorOfHall.exists()) {
-            sectorOfHall.click();
-            SleepUtils.sleepSeconds(6);
-        }
-        if (freeSeatButton.exists()) {
-            freeSeatButton.click();
+        if (addTicketButton.exists()) {
+            tickeForm = TickeForm.WITHOUT_PLACE;
+            if (ticketsWithoutPlace.size() == qantitiOfSelectedPlaces) {
+                addTicketButton.click();
+            }
             qantitiOfSelectedPlaces++;
         } else {
-            throw new RuntimeException("Свободных мест нет");
+            if (sectorOfHall.exists()) {
+                sectorOfHall.click();
+            }
+            SleepUtils.sleepSeconds(5);
+            if (addTicketButton.exists()) {
+                tickeForm = TickeForm.WITHOUT_PLACE;
+                if (ticketsWithoutPlace.size() == qantitiOfSelectedPlaces) {
+                    addTicketButton.click();
+                }
+                qantitiOfSelectedPlaces++;
+            } else {
+                if (!freeSeatButton.exists()) {
+                    throw new RuntimeException("Свободных мест нет");
+                }
+                freeSeatButton.click();
+                qantitiOfSelectedPlaces++;
+            }
         }
     }
 }

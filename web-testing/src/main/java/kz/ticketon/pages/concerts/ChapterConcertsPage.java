@@ -10,18 +10,14 @@ import kz.ticketon.pages.EventPage;
 import org.openqa.selenium.By;
 
 public class ChapterConcertsPage extends ChapterPage {
-    private final String shortPageUrl = "concerts";
-    protected final String pageTitleRus = "Билеты на концерт";
-    protected final String pageTitleEng = "Concert tickets";
-    protected final String pageTitleKz = "Концертке билеттер";
-
     public ChapterConcertsPage(Cities city, Languages language) {
         super(city, language);
-        super.shortPageUrl = shortPageUrl;
-        super.pageTitleRus = pageTitleRus;
-        super.pageTitleEng = pageTitleEng;
-        super.pageTitleKz = pageTitleKz;
+        super.shortPageUrl = "concerts";
+        super.pageTitleRus = "Билеты на концерт";
+        super.pageTitleEng = "Concert tickets";
+        super.pageTitleKz = "Концертке билеттер";
     }
+
     @Override
     @Step("Клик на доступное событие")
     public EventPage clickEvent(final SelenideElement movie) {
@@ -29,9 +25,10 @@ public class ChapterConcertsPage extends ChapterPage {
         movie.scrollTo().click();
         return new EventConcertsPage(city, language, titleMovie);
     }
+
     @Override
     public EventPage clickFirstEvent() {
-        SleepUtils.sleepSeconds(5);
+        SleepUtils.sleepSeconds(10);
         if (eventList.isEmpty()) {
             throw new RuntimeException("Доступных концертов нет");
         }

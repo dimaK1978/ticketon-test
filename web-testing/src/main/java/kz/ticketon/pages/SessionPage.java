@@ -3,20 +3,17 @@ package kz.ticketon.pages;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class SessionPage {
     protected final String titleExpect;
     protected final String time;
     protected final String day;
     protected final String month;
     protected final String eventLocation;
-    protected List<String> seats;
     protected SelenideElement titleActual;
     protected SelenideElement makingOrderButtom;
     protected TickeForm tickeForm = TickeForm.WITH_PLACE;
-    protected int plaseInd = 0;
+    protected int qantitiOfSelectedPlaces = 0;
+
 
     public SessionPage(String titleExpect, String time, String day, String month, String eventLocation) {
         this.titleExpect = titleExpect;
@@ -24,7 +21,6 @@ public abstract class SessionPage {
         this.day = day;
         this.month = month;
         this.eventLocation = eventLocation;
-        seats = new ArrayList<>();
     }
 
     public abstract void clickSeatAddTicket();
@@ -58,6 +54,6 @@ public abstract class SessionPage {
 
     protected enum TickeForm {
         WITH_PLACE,
-        WITHOUT_PLACE;
+        WITHOUT_PLACE
     }
 }

@@ -11,19 +11,14 @@ import kz.ticketon.pages.cinema.EventCinemaPage;
 import org.openqa.selenium.By;
 
 public class ChapterPageTours extends ChapterPage {
-    private final String shortPageUrl = "tours";
-
-    protected final String pageTitleRus = "Туры";
-    protected final String pageTitleEng = "Tours";
-    protected final String pageTitleKz = "Саяхаттар";
-
     public ChapterPageTours(Cities city, Languages language) {
         super(city, language);
-        super.shortPageUrl = shortPageUrl;
-        super.pageTitleRus = pageTitleRus;
-        super.pageTitleEng = pageTitleEng;
-        super.pageTitleKz = pageTitleKz;
+        super.shortPageUrl = "tours";
+        super.pageTitleRus = "Туры";
+        super.pageTitleEng = "Tours";
+        super.pageTitleKz = "Саяхаттар";
     }
+
     @Override
     @Step("Клик на доступное событие")
     public EventPage clickEvent(final SelenideElement movie) {
@@ -31,6 +26,7 @@ public class ChapterPageTours extends ChapterPage {
         movie.scrollTo().click();
         return new EventCinemaPage(city, language, titleMovie);
     }
+
     //заглушка, для данного раздела пока полной реализации нет
     @Override
     public EventPage clickFirstEvent() {

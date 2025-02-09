@@ -17,37 +17,37 @@ import java.util.stream.Stream;
 
 @Feature("Работоспособность основных элемнтов главной страницы")
 public class CheckChangeCityTest extends BaseClassWebTest {
-//
-//    static Stream<Object[]> cities() {
-//        List<Object[]> list = new ArrayList<>();
-//        Arrays.asList(Cities.values()).forEach(
-//                city -> Arrays.asList(Languages.values()).forEach(
-//                        language -> {
-//                            {
-//                                if (city != Cities.NO_CITY) {
-//                                    list.add(new Object[]{city, language});
-//                                }
-//                            }
-//                        }
-//                )
-//        );
-//        return list.stream();
-//    }
-//
-//    @Story("Проверка переключения города главной страницы")
-//    @ParameterizedTest()
-//    @MethodSource("cities")
-//    public void checkChangeCityMaim(
-//            final Cities newCity,
-//            final Languages language
-//    ) {
-//        SoftAssertions softAssertions = new SoftAssertions();
-//        MainPage mainPage = new MainPage(Cities.NO_CITY, language);
-//        mainPage.openPage();
-//        mainPage.changeSity(newCity);
-//        checkUrlPageCityLanguageMaim(mainPage, softAssertions);
-//        checkViewCityTitleMaim(mainPage, newCity, softAssertions);
-//        checkViewCityMaim(mainPage, newCity, softAssertions);
-//        softAssertions.assertAll();
-//    }
+
+    static Stream<Object[]> cities() {
+        List<Object[]> list = new ArrayList<>();
+        Arrays.asList(Cities.values()).forEach(
+                city -> Arrays.asList(Languages.values()).forEach(
+                        language -> {
+                            {
+                                if (city != Cities.NO_CITY) {
+                                    list.add(new Object[]{city, language});
+                                }
+                            }
+                        }
+                )
+        );
+        return list.stream();
+    }
+
+    @Story("Проверка переключения города главной страницы")
+    @ParameterizedTest()
+    @MethodSource(value = "cities()")
+    public void checkChangeCityMaim(
+            final Cities newCity,
+            final Languages language
+    ) {
+        SoftAssertions softAssertions = new SoftAssertions();
+        MainPage mainPage = new MainPage(Cities.NO_CITY, language);
+        mainPage.openPage();
+        mainPage.changeSity(newCity);
+        checkUrlPageCityLanguageMaim(mainPage, softAssertions);
+        checkViewCityTitleMaim(mainPage, newCity, softAssertions);
+        checkViewCityMaim(mainPage, newCity, softAssertions);
+        softAssertions.assertAll();
+    }
 }

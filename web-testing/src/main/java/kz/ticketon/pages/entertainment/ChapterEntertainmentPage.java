@@ -11,17 +11,12 @@ import kz.ticketon.pages.concerts.EventConcertsPage;
 import org.openqa.selenium.By;
 
 public class ChapterEntertainmentPage extends ChapterPage {
-    private final String shortPageUrl = "entertainment";
-    protected final String pageTitleRus = "Развлечения";
-    protected final String pageTitleEng = "Entertainment";
-    protected final String pageTitleKz = "Ойын-сауықтар";
-
     public ChapterEntertainmentPage(Cities city, Languages language) {
         super(city, language);
-        super.shortPageUrl = shortPageUrl;
-        super.pageTitleRus = pageTitleRus;
-        super.pageTitleEng = pageTitleEng;
-        super.pageTitleKz = pageTitleKz;
+        super.shortPageUrl = "entertainment";
+        super.pageTitleRus = "Развлечения";
+        super.pageTitleEng = "Entertainment";
+        super.pageTitleKz = "Ойын-сауықтар";
     }
 
     @Override
@@ -31,6 +26,7 @@ public class ChapterEntertainmentPage extends ChapterPage {
         movie.scrollTo().click();
         return new EventConcertsPage(city, language, titleMovie);
     }
+
     //заглушка, для данного раздела пока полной реализации нет
     @Override
     public EventPage clickFirstEvent() {

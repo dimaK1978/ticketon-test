@@ -11,13 +11,13 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import static com.codeborne.selenide.Selenide.webdriver;
 
-public class BaseClassWebTest extends BaseClassTest {
-    protected static int TIME_OUT = 100000;
-
+public class BaseClassWebTest {
     @BeforeAll
     public static void setUpAll() {
-        Configuration.browserSize = "1280x800";
-        Configuration.timeout = TIME_OUT;
+        Configuration.browserSize = "1920x1080";
+        Configuration.timeout = 10000;
+        Configuration.pageLoadTimeout = 40000;
+        //  Configuration.headless = true;
         Configuration.browserCapabilities = new ChromeOptions().addArguments("--remote-allow-origins=*");
     }
 
@@ -44,8 +44,8 @@ public class BaseClassWebTest extends BaseClassTest {
     public void checkMakingOrdere(final SessionPage sessionPage, final SoftAssertions softAssertions) {
         MakingOrderPage makingOrderPage = sessionPage.makingOrder();
         softAssertions
-                .assertThat(makingOrderPage.getTitleActual())
-                .contains(makingOrderPage.getTitleExpected());
+                .assertThat(makingOrderPage.getTitleActual().trim())
+                .contains(makingOrderPage.getTitleExpected().trim());
     }
 
     @Step("Проверка нахождения страницы по заголовку в результатах поиска")
@@ -64,8 +64,8 @@ public class BaseClassWebTest extends BaseClassTest {
             final SoftAssertions softAssertions
     ) {
         softAssertions
-                .assertThat(chapterPage.getPageTitle())
-                .isEqualTo(chapterPage.getPageTitleExpected());
+                .assertThat(chapterPage.getPageTitle().trim())
+                .isEqualTo(chapterPage.getPageTitleExpected().trim());
     }
 
     @Step("Проверка URL главной страницы для выбранного города и языка")

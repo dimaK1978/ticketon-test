@@ -9,14 +9,14 @@ import kz.ticketon.Languages;
 import static com.codeborne.selenide.Selenide.*;
 
 public abstract class ChapterPage {
+    protected final SelenideElement pageTitle = $x("//div[@class='page-title']");
+    protected final ElementsCollection eventList = $$x("//div[@class='block-1 list-block']");
     protected String shortPageUrl;
     protected Cities city;
     protected Languages language;
     protected String pageTitleRus;
     protected String pageTitleEng;
     protected String pageTitleKz;
-    protected final SelenideElement pageTitle = $x("//div[@class='page-title']");
-    protected final ElementsCollection eventList = $$x("//div[@class='block-1 list-block']");
 
     public ChapterPage(Cities city, Languages language) {
         this.city = city;
@@ -53,18 +53,11 @@ public abstract class ChapterPage {
 
     @Step("Получить ожидаемый заголовок страницы раздела")
     public String getPageTitleExpected() {
-        String title;
-        switch (language) {
-            case KZ:
-                title = pageTitleKz;
-                break;
-            case ENG:
-                title = pageTitleEng;
-                break;
-            default:
-                title = pageTitleRus;
-                break;
-        }
+        String title = switch (language) {
+            case KZ -> pageTitleKz;
+            case ENG -> pageTitleEng;
+            default -> pageTitleRus;
+        };
         return title;
     }
 

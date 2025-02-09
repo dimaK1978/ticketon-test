@@ -10,8 +10,8 @@ import kz.ticketon.pages.SessionPage;
 import static com.codeborne.selenide.Selenide.*;
 
 public class EventSportsPage extends EventPage {
-    private final SelenideElement frameFormChoosePlase = $("[id='widgetFrame']");
-
+    private final SelenideElement frameOldFormChoosePlase = $("[id='widgetFrame']");
+    private final SelenideElement frameNewFormChooseTicket = $("[id='frame_ticketonWidgetContainer']");
     public EventSportsPage(final Cities city, final Languages language, final String title) {
         super(city, language, title);
         availableSessions = $$x("//div[@class='EventScheduleRow_eventScheduleRow__gQsT9']");
@@ -26,9 +26,12 @@ public class EventSportsPage extends EventPage {
             final String month,
             final String eventLocation
     ) {
-        if (frameFormChoosePlase.exists()) {
-            switchTo().frame(frameFormChoosePlase);
-            return new SessionSportsPage(title, time, day, month, eventLocation);
+        if (frameOldFormChoosePlase.exists()) {
+            switchTo().frame(frameOldFormChoosePlase);
+            return new SessionSportsOldFormPage(title, time, day, month, eventLocation);
+        } else if (frameNewFormChooseTicket.exists()) {
+            switchTo().frame(frameNewFormChooseTicket);
+            return new SessionSportsNewFormPage(title, time, day, month, eventLocation);
         } else {
             throw new RuntimeException("Форма для выбора билетов не загрузилась");
         }

@@ -28,15 +28,18 @@ public abstract class EventPage extends BaseTemlatePage {
 
     @Step("Выбор доступного сеанса, переход к форме выбора мест и приобретения билетов")
     public SessionPage getSessionMovie(final SelenideElement selenideElement) {
-        if (availableSessions.size() == 0) {
+        if (availableSessions.isEmpty()) {
             throw new RuntimeException("Нет доступных сеансов");
         }
         final SelenideElement buttonSession = selenideElement.find("span[class='TicketButton_text__HwCFn']");
+        if (!buttonSession.scrollIntoView(true).isDisplayed()) {
+            throw new RuntimeException("Не удалось выбрать сеанс");
+        }
         final String time = buttonSession.getOwnText();
         final String day = selenideElement.find("div[class='Date_day__GAPLg']").getText();
         final String month = selenideElement.find("div[class='Date_dateText__h6416']").$(new By.ByTagName("div")).getText();
         final String eventLocation = selenideElement.find(stringForFindLocation).getText();
-        buttonSession.scrollTo().click();
+        buttonSession.scrollIntoView(true).click();
         SleepUtils.sleepSeconds(15);
         return createSesionPage(time, day, month, eventLocation);
     }

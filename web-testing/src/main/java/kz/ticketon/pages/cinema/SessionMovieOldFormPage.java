@@ -3,16 +3,21 @@ package kz.ticketon.pages.cinema;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import kz.ticketon.pages.MakingOrderOldFormPage;
-import kz.ticketon.pages.MakingOrderPage;
 import kz.ticketon.pages.SessionPage;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$$x;
+import static com.codeborne.selenide.Selenide.$x;
 
 public class SessionMovieOldFormPage extends SessionPage {
-    private SelenideElement freeSeatButton = $x("//div[@style='color: rgb(255, 255, 255);']");
-    private SelenideElement fullDataSession = $x("//div[@class='timeAndPlace']");
-    private ElementsCollection tickets = $$x("//div[@class='ticketWrapper desktopTicket']");
+    private final SelenideElement freeSeatButton = $x("//div[@style='color: rgb(255, 255, 255);']");
+    private final SelenideElement fullDataSession = $x("//div[@class='timeAndPlace']");
+    private final ElementsCollection tickets = $$x("//div[@class='ticketWrapper desktopTicket']");
+
+    public SessionMovieOldFormPage(String titleExpect, String time, String day, String month, String movieTheatre) {
+        super(titleExpect, time, day, month, movieTheatre);
+        titleActual = $x("//div[@class='title']");
+        makingOrderButtom = $x("//button[@class='button primary']");
+    }
 
     @Step("Получение текста данных о сеансе с временем, датой и местом проведения из открывшейся формы")
     @Override
@@ -29,24 +34,21 @@ public class SessionMovieOldFormPage extends SessionPage {
     @Step("Удаление выбранного билета")
     @Override
     public void deleteTicket() {
-        if (tickets.size() == 0) {
+        if (qantitiOfSelectedPlaces == 0) {
             throw new RuntimeException("Билетов с списке нет");
         }
         tickets.get(0).$("img[alt='закрыть']").click();
-    }
-
-    public SessionMovieOldFormPage(String titleExpect, String time, String day, String month, String movieTheatre) {
-        super(titleExpect, time, day, month, movieTheatre);
-        titleActual = $x("//div[@class='title']");
-        makingOrderButtom = $x("//button[@class='button primary']");
+        qantitiOfSelectedPlaces--;
     }
 
     @Step("Клик на свободное место в зале - добавление билета")
     @Override
     public void clickSeatAddTicket() {
-        if (!freeSeatButton.exists()) {
+        if (freeSeatButton.exists()) {
+            freeSeatButton.scrollIntoView(true).click();
+            qantitiOfSelectedPlaces++;
+        } else {
             throw new RuntimeException("Свободных мест нет");
         }
-        freeSeatButton.click();
     }
 }

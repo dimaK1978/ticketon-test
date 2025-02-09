@@ -10,18 +10,12 @@ import kz.ticketon.pages.EventPage;
 import org.openqa.selenium.By;
 
 public class ChapterSportsPage extends ChapterPage {
-    private final String shortPageUrl = "sports";
-
-    protected final String pageTitleRus = "Билеты на спорт";
-    protected final String pageTitleEng = "Sports tickets";
-    protected final String pageTitleKz = "Спорт билеттері";
-
     public ChapterSportsPage(Cities city, Languages language) {
         super(city, language);
-        super.shortPageUrl = shortPageUrl;
-        super.pageTitleRus = pageTitleRus;
-        super.pageTitleEng = pageTitleEng;
-        super.pageTitleKz = pageTitleKz;
+        super.shortPageUrl = "sports";
+        super.pageTitleRus = "Билеты на спорт";
+        super.pageTitleEng = "Sports tickets";
+        super.pageTitleKz = "Спорт билеттері";
     }
 
     @Override
@@ -30,10 +24,11 @@ public class ChapterSportsPage extends ChapterPage {
         movie.scrollTo().click();
         return new EventSportsPage(city, language, titleMovie);
     }
+
     @Override
     @Step("Клик на доступное событие")
     public EventPage clickFirstEvent() {
-        SleepUtils.sleepSeconds(5);
+        SleepUtils.sleepSeconds(10);
         if (eventList.isEmpty()) {
             throw new RuntimeException("Доступных спортивных мероприятий нет");
         }

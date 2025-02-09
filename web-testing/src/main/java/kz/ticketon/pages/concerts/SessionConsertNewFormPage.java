@@ -1,5 +1,6 @@
-package kz.ticketon.pages.cinema;
+package kz.ticketon.pages.concerts;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import kz.ticketon.SleepUtils;
@@ -7,17 +8,18 @@ import kz.ticketon.pages.MakingOrderNewFormPage;
 import kz.ticketon.pages.MakingOrderPage;
 import kz.ticketon.pages.SessionPage;
 
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.*;
 
-public class SessionMovieNewFormPage extends SessionPage {
+public class SessionConsertNewFormPage extends SessionPage {
     private final SelenideElement tickets = $x("//div[@id='s-seats']");
-    private final SelenideElement cancelSeatButtons = $x("//a[@class='seat seat-s1 seat-t0 seat-s1-t0 active']//i");
+    private final ElementsCollection ticketsWithoutPlace = $$x("//tr[@class='row--item']");
+    private final SelenideElement addTicketButton = $x("//button[@class='tickets--add-btn btn']");
     private final SelenideElement freeSeatButtons = $x("//a[@class='seat seat-s1 seat-t0 seat-s1-t0']//i");
-    protected SelenideElement movieTheatreActual = $x("//div[@class='s-i-in']");
+    private final SelenideElement cancelSeatButtons = $x("//a[@class='seat seat-s1 seat-t0 seat-s1-t0 active']//i");
     protected SelenideElement dateActual = $x("//div[@id='s-show']");
+    protected SelenideElement movieHallActual = $x("//div[@class='s-i-in']");
 
-
-    public SessionMovieNewFormPage(String titleExpect, String time, String day, String month, String movieTheatre) {
+    public SessionConsertNewFormPage(String titleExpect, String time, String day, String month, String movieTheatre) {
         super(titleExpect, time, day, month, movieTheatre);
         titleActual = $x("//div[@id='s-event']");
         makingOrderButtom = $x("//a[@class='next']");
@@ -30,7 +32,10 @@ public class SessionMovieNewFormPage extends SessionPage {
             throw new RuntimeException("Билетов с списке нет");
         }
         SleepUtils.sleepSeconds(10);
-        if (cancelSeatButtons.exists()) {
+        if (tickeForm == TickeForm.WITHOUT_PLACE) {
+            ticketsWithoutPlace.get(0).$("td[class='row--remove']").click();
+            qantitiOfSelectedPlaces--;
+        } else if (cancelSeatButtons.exists()) {
             cancelSeatButtons.scrollIntoView(true).click();
             qantitiOfSelectedPlaces--;
         }
@@ -41,7 +46,7 @@ public class SessionMovieNewFormPage extends SessionPage {
     public String getFullDataSessionActual() {
         return String.format(
                 "%s, %s", dateActual.getText(),
-                movieTheatreActual.getOwnText());
+                movieHallActual.getOwnText());
     }
 
     @Step("Получение количества выбранных билетов")
@@ -56,14 +61,20 @@ public class SessionMovieNewFormPage extends SessionPage {
     @Step("Клик на свободное место в зале - добавление билета")
     @Override
     public void clickSeatAddTicket() {
-        if (freeSeatButtons.exists()) {
+        SleepUtils.sleepSeconds(5);
+        if (addTicketButton.exists()) {
+            tickeForm = TickeForm.WITHOUT_PLACE;
+            if (ticketsWithoutPlace.size() == qantitiOfSelectedPlaces) {
+                addTicketButton.click();
+            }
+            qantitiOfSelectedPlaces++;
+        } else if (freeSeatButtons.exists()) {
             freeSeatButtons.scrollIntoView(true).click();
             qantitiOfSelectedPlaces++;
         } else {
             throw new RuntimeException("Свободных мест нет");
         }
     }
-
 
     @Override
     @Step("переход к оформлению заказа")

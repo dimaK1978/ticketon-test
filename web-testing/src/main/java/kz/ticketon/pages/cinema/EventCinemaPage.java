@@ -15,7 +15,7 @@ public class EventCinemaPage extends EventPage {
 
     public EventCinemaPage(final Cities city, final Languages language, final String title) {
         super(city, language, title);
-        availableSessions = $$x("//div[@class='ScheduleRow_scheduleRow__o3xf2']");
+        availableSessions = $$("div[class='ScheduleRow_scheduleRow__o3xf2']");
         stringForFindLocation = "div[class='CinemaInfo_cinemaName___Escv']";
     }
     @Step("Открытие модального окна выбора билетов в зависимости от формы")

@@ -10,18 +10,14 @@ import kz.ticketon.pages.EventPage;
 import org.openqa.selenium.By;
 
 public class ChapterTheatresPage extends ChapterPage {
-    private final String shortPageUrl = "theatres";
-    protected final String pageTitleRus = "Билеты в театр";
-    protected final String pageTitleEng = "Theater tickets";
-    protected final String pageTitleKz = "Театрға билеттер";
-
     public ChapterTheatresPage(Cities city, Languages language) {
         super(city, language);
-        super.shortPageUrl = shortPageUrl;
-        super.pageTitleRus = pageTitleRus;
-        super.pageTitleEng = pageTitleEng;
-        super.pageTitleKz = pageTitleKz;
+        super.shortPageUrl = "theatres";
+        super.pageTitleRus = "Билеты в театр";
+        super.pageTitleEng = "Theater tickets";
+        super.pageTitleKz = "Театрға билеттер";
     }
+
     @Override
     @Step("Клик на доступное событие")
     public EventPage clickEvent(final SelenideElement movie) {
@@ -29,6 +25,7 @@ public class ChapterTheatresPage extends ChapterPage {
         movie.scrollTo().click();
         return new EventTheatresPage(city, language, titleMovie);
     }
+
     @Override
     public EventPage clickFirstEvent() {
         SleepUtils.sleepSeconds(5);

@@ -1,7 +1,6 @@
 package kz.ticketon.pages.christmas_event;
 
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Step;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
 import kz.ticketon.pages.ChapterPage;
@@ -12,17 +11,12 @@ import org.openqa.selenium.By;
 import java.util.concurrent.TimeUnit;
 
 public class ChapterChristmasEventPage extends ChapterPage {
-    private final String shortPageUrl = "christmas-event";
-    protected final String pageTitleRus = "Новогодние события";
-    protected final String pageTitleEng = "Christmas Event";
-    protected final String pageTitleKz = "ЖАНА-ЖЫЛ";
-
     public ChapterChristmasEventPage(Cities city, Languages language) {
         super(city, language);
-        super.shortPageUrl = shortPageUrl;
-        super.pageTitleRus = pageTitleRus;
-        super.pageTitleEng = pageTitleEng;
-        super.pageTitleKz = pageTitleKz;
+        super.shortPageUrl = "christmas-event";
+        super.pageTitleRus = "Новогодние события";
+        super.pageTitleEng = "Christmas Event";
+        super.pageTitleKz = "ЖАНА-ЖЫЛ";
     }
 
     @Override
@@ -31,6 +25,7 @@ public class ChapterChristmasEventPage extends ChapterPage {
         movie.scrollTo().click();
         return new EventCinemaPage(city, language, titleMovie);
     }
+
     //заглушка, для данного раздела пока полной реализации нет
     @Override
     public EventPage clickFirstEvent() {
