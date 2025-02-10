@@ -17,33 +17,33 @@ import java.util.stream.Stream;
 
 @Feature("Работоспособность основных элемнтов главной страницы")
 public class CheckChangeLanguageTest extends BaseClassWebTest {
-//    static Stream<Object[]> languages() {
-//        List<Object[]> list = new ArrayList<>();
-//        Arrays.asList(Languages.values()).forEach(
-//                startLanguage -> Arrays.asList(Languages.values()).forEach(
-//                        newLanguage -> {
-//                            if (startLanguage != newLanguage) {
-//                                list.add(new Object[]{startLanguage, newLanguage});
-//                            }
-//                        }
-//                )
-//        );
-//        return list.stream();
-//    }
-//
-//    @Story("Проверка переключения языка главной страницы")
-//    @ParameterizedTest()
-//    @MethodSource("languages")
-//    public void checkChangeLanguage(
-//            final Languages startPageLanguage,
-//            final Languages newLanguage
-//    ) {
-//        SoftAssertions softAssertions = new SoftAssertions();
-//        MainPage mainPage = new MainPage(Cities.NO_CITY, startPageLanguage);
-//        mainPage.openPage();
-//        mainPage.changeLanguage(newLanguage);
-//        checkUrlPageCityLanguageMaim(mainPage, softAssertions);
-//        checkViewLanguageMaim(mainPage, newLanguage, softAssertions);
-//        softAssertions.assertAll();
-//    }
+    static Stream<Object[]> languages() {
+        List<Object[]> list = new ArrayList<>();
+        Arrays.asList(Languages.values()).forEach(
+                startLanguage -> Arrays.asList(Languages.values()).forEach(
+                        newLanguage -> {
+                            if (startLanguage != newLanguage) {
+                                list.add(new Object[]{startLanguage, newLanguage});
+                            }
+                        }
+                )
+        );
+        return list.stream();
+    }
+
+    @Story("Проверка переключения языка главной страницы")
+    @ParameterizedTest()
+    @MethodSource("languages")
+    public void checkChangeLanguage(
+            final Languages startPageLanguage,
+            final Languages newLanguage
+    ) {
+        SoftAssertions softAssertions = new SoftAssertions();
+        MainPage mainPage = new MainPage(Cities.NO_CITY, startPageLanguage);
+        mainPage.openPage();
+        mainPage.changeLanguage(newLanguage);
+        checkUrlPageCityLanguageMaim(mainPage, softAssertions);
+        checkViewLanguageMaim(mainPage, newLanguage, softAssertions);
+        softAssertions.assertAll();
+    }
 }
