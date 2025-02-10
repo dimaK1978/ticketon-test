@@ -1,16 +1,73 @@
 package kz.ticketon;
 
 import org.junit.jupiter.api.Test;
-
 import java.net.MalformedURLException;
 
-public class StartTest extends BaseClassAppTest{
+public class StartTest extends BaseClassAppTest {
 
-//    @Test
-//    public void startTicketon() throws MalformedURLException {
-//        initialize();
-//
-////        $x("com.google.android.apps.nexuslauncher:id/overview_actions_view");
-//     // $x("//android.widget.TextView[@content-desc='Predicted app: Ticketon']").click();
-//    }
+    @Test
+    public void startTicketon() throws MalformedURLException {
+        initialize();  // Теперь driver создаётся корректно
+
+        mainScreenPhonePage.clickMainElement();
+        chooseLanguagePage.checkLanguagePage()
+                .selectLanguage("Русский");
+        chooseCityPage.checkCityPage()
+                .selectCity("Астана");
+        mainPage.checkMainPage()
+                .clickMenu()
+                .clickEvents();
+        eventsPage.checkEvents();
+    }
 }
+//
+//// Неявное ожидание
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//
+//// Проверка доступных контекстов
+//Set<String> contexts = driver.getContextHandles();
+//        for (String context : contexts) {
+//        System.out.println("Доступный контекст: " + context);
+//        }
+
+//// Ожидание видимости элемента
+////Это должно быть в классе MainScreenPhonePage
+//WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+//WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.className(
+//        "android.widget.TextView"
+//)));
+//// Ожидание кликабельности элемента
+//element = wait.until(ExpectedConditions.elementToBeClickable(element));
+//        element.click();
+////Это должно быть в классе ChooseLanguagePage
+//WebElement chooselanguage = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(
+//        "android:id/text1"
+//)));
+//        chooselanguage.click();
+//
+//WebElement language = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
+//        "//android.widget.CheckedTextView[@resource-id=\"android:id/text1\" and @text=\"Русский\"]"
+//)));
+//        language.click();
+//
+//WebElement further = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
+//        "//android.widget.TextView[@text=\"ДАЛЕЕ\"]"
+//)));
+//        further.click();
+////это должно быть в классе ChooseCityPage
+//WebElement clickCity = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
+//        "//android.widget.TextView[@resource-id=\"android:id/text1\" and @text=\"Алматы\"]"
+//)));
+//        clickCity.click();
+//
+//WebElement chooseCity = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
+//        "//android.widget.CheckedTextView[@resource-id=\"android:id/text1\" and @text=\"Астана\"]"
+//)));
+//        chooseCity.click();
+//
+//WebElement start = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
+//        "//android.widget.TextView[@text=\"НАЧАТЬ\"]"
+//)));
+//        start.click();
+//    }
+//            }
