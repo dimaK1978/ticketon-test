@@ -14,14 +14,14 @@ import java.time.Duration;
 public class ChooseCityPage {
     private final AndroidDriver driver;
     private final WebDriverWait wait;
-    private Languages language;
-    private String xpahtAccordeonCity = "//android.widget.TextView[@resource-id='android:id/text1' and @text='%s']";
-    private String xpahtChooseCity = "//android.widget.CheckedTextView[@resource-id='android:id/text1' and @text='%s']";
-    private String xpathButtonNext = "//android.widget.TextView[@text='%s']";
+    private final Languages language;
+    private final String xpahtAccordeonCity = "//android.widget.TextView[@resource-id='android:id/text1' and @text='%s']";
+    private final String xpahtChooseCity = "//android.widget.CheckedTextView[@resource-id='android:id/text1' and @text='%s']";
+    private final String xpathButtonNext = "//android.widget.TextView[@text='%s']";
 
     public ChooseCityPage(AndroidDriver driver, Languages language) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         this.language = language;
     }
 
@@ -34,7 +34,7 @@ public class ChooseCityPage {
     }
 
     @Step("Выбор города при запуске приложения ")
-    public MainScreenAppPage selectCity(Cities city) {
+    public MainScreenAppPage selectCity(final Cities city) {
         final String startCityString = switch (language) {
             case KZ -> "Алматы";
             case ENG -> "Almaty";

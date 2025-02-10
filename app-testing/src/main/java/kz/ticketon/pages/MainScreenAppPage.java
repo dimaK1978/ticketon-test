@@ -14,19 +14,23 @@ import java.time.Duration;
 public class MainScreenAppPage {
     private final AndroidDriver driver;
     private final WebDriverWait wait;
-    private Cities city;
-    private Languages language;
-    private String xpathChapterMenu = "//android.widget.TextView[@text='%s']";
+    private final Cities city;
+    private final Languages language;
+    private final String xpathChapterMenu = "//android.widget.TextView[@text='%s']";
 
     public MainScreenAppPage(final AndroidDriver driver, final Languages language, final Cities city) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         this.city = city;
         this.language = language;
     }
 
     public WebDriverWait getWait() {
         return wait;
+    }
+
+    public Languages getLanguage() {
+        return language;
     }
 
     public MainScreenAppPage checkMainPage() {
@@ -37,11 +41,11 @@ public class MainScreenAppPage {
         return this;
     }
 
+    @Step("Клик для открытия пунктов главного меню")
     public MainScreenAppPage clickMenu() {
-        WebElement clickMenu = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
-                "//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup"
-        )));
-        clickMenu.click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.className(
+                "android.view.ViewGroup"
+        ))).click();
         return this;
     }
 
@@ -49,13 +53,13 @@ public class MainScreenAppPage {
     public EventsPage clickEventsEvents() {
 
         final String eventString = switch (language) {
-            case KZ -> "БАСТАУ";
-            case ENG -> "START";
+            case KZ -> "Оқиғалар";
+            case ENG -> "Events";
             default -> "События";
         };
         wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath(String.format(xpathChapterMenu, eventString))
         )).click();
-        return new EventsPage(driver);
+        return new EventsPage(driver, language, city);
     }
 }

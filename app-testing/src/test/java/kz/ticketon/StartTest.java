@@ -1,79 +1,24 @@
 package kz.ticketon;
 
-import kz.ticketon.pages.ChooseCityPage;
-import kz.ticketon.pages.ChooseLanguagePage;
-import kz.ticketon.pages.MainScreenAppPage;
-import kz.ticketon.pages.MainScreenPhonePage;
-import org.junit.jupiter.api.Test;
-
-import java.net.MalformedURLException;
+import io.qameta.allure.Story;
+import kz.ticketon.pages.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 public class StartTest extends BaseClassAppTest {
-
-    @Test
-    public void startTicketon() throws MalformedURLException {
+    @Story("Проверка запуска и стартовая нстройка языка и города приложения, преход на главную страницу, главное меню выбор пункта 'Cобытия'")
+    @ParameterizedTest()
+    @EnumSource(Languages.class)
+    public void startTicketon(Languages language) {
        final MainScreenPhonePage mainScreenPhonePage = new MainScreenPhonePage(driver);
        final ChooseLanguagePage chooseLanguagePage = mainScreenPhonePage.clickApp();
         checkLanguagePage(chooseLanguagePage);
-        final ChooseCityPage chooseCityPage = chooseLanguagePage.selectLanguage(Languages.ENG);
-       final MainScreenAppPage mainScreenAppPage = chooseCityPage.selectCity(Cities.ASTANA);
-       /*  checkChooseCityPage(chooseCityPage);
-             chooseCityPage.checkCityPage()
-                .selectCity("Астана");
-        mainPage.checkMainPage()
-                .clickMenu()
-                .clickEvents();
-        eventsPage.checkEvents();*/
+        final ChooseCityPage chooseCityPage = chooseLanguagePage.selectLanguage(language);
+        checkChooseCityPage(chooseCityPage);
+        final MainScreenAppPage mainScreenAppPage = chooseCityPage.selectCity(Cities.ASTANA);
+        checkMainPage(mainScreenAppPage);
+        mainScreenAppPage.clickMenu();
+        final EventsPage eventsPage = mainScreenAppPage.clickEventsEvents();
+        checkEvents(eventsPage);
     }
 }
-//
-//// Неявное ожидание
-//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-//
-//// Проверка доступных контекстов
-//Set<String> contexts = driver.getContextHandles();
-//        for (String context : contexts) {
-//        System.out.println("Доступный контекст: " + context);
-//        }
-
-//// Ожидание видимости элемента
-////Это должно быть в классе MainScreenPhonePage
-//WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
-//WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.className(
-//        "android.widget.TextView"
-//)));
-//// Ожидание кликабельности элемента
-//element = wait.until(ExpectedConditions.elementToBeClickable(element));
-//        element.click();
-////Это должно быть в классе ChooseLanguagePage
-//WebElement chooselanguage = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(
-//        "android:id/text1"
-//)));
-//        chooselanguage.click();
-//
-//WebElement language = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
-//        "//android.widget.CheckedTextView[@resource-id=\"android:id/text1\" and @text=\"Русский\"]"
-//)));
-//        language.click();
-//
-//WebElement further = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
-//        "//android.widget.TextView[@text=\"ДАЛЕЕ\"]"
-//)));
-//        further.click();
-////это должно быть в классе ChooseCityPage
-//WebElement clickCity = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
-//        "//android.widget.TextView[@resource-id=\"android:id/text1\" and @text=\"Алматы\"]"
-//)));
-//        clickCity.click();
-//
-//WebElement chooseCity = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
-//        "//android.widget.CheckedTextView[@resource-id=\"android:id/text1\" and @text=\"Астана\"]"
-//)));
-//        chooseCity.click();
-//
-//WebElement start = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
-//        "//android.widget.TextView[@text=\"НАЧАТЬ\"]"
-//)));
-//        start.click();
-//    }
-//            }

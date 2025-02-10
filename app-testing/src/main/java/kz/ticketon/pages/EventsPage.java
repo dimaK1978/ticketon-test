@@ -3,30 +3,28 @@ package kz.ticketon.pages;
 import io.appium.java_client.android.AndroidDriver;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
 public class EventsPage {
-    private AndroidDriver driver;
-    private WebDriverWait wait;
-    private Cities city;
-    private Languages language;
+    private final AndroidDriver driver;
+    private final WebDriverWait wait;
+    private final Cities city;
+    private final Languages language;
 
-    public EventsPage(AndroidDriver driver) {
+    public EventsPage(final AndroidDriver driver, final Languages language, final Cities city) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(50));;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        this.language = language;
+        this.city = city;
     }
 
-    public EventsPage checkEvents() {
-        WebElement checkEvents = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
-                "//android.widget.TextView[@text=\"События\"]"
-        )));
-        checkEvents.isDisplayed();
-        return this;
+    public WebDriverWait getWait() {
+        return wait;
+    }
 
+    public Languages getLanguage() {
+        return language;
     }
 }

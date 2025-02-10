@@ -14,12 +14,12 @@ import java.time.Duration;
 public class ChooseLanguagePage {
     private final AndroidDriver driver;
     private final WebDriverWait wait;
-    private String xpathChooseLanguage = "//android.widget.CheckedTextView[@resource-id='android:id/text1' and @text='%s']";
-    private String xpathButtonNext = "//android.widget.TextView[@text='%s']";
+    private final String xpathChooseLanguage = "//android.widget.CheckedTextView[@resource-id='android:id/text1' and @text='%s']";
+    private final String xpathButtonNext = "//android.widget.TextView[@text='%s']";
 
     public ChooseLanguagePage(final AndroidDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
     public WebDriverWait getWait() {
@@ -49,13 +49,5 @@ public class ChooseLanguagePage {
                 String.format(xpathButtonNext, nameButtonString))
         )).click();
         return new ChooseCityPage(driver, language);
-    }
-
-
-    public void checkLanguagePage() {
-        WebElement textChooseLanguage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
-                "//android.widget.TextView[@text='Выберите язык']"
-        )));
-        textChooseLanguage.isDisplayed();
     }
 }
