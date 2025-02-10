@@ -2,10 +2,7 @@ package kz.ticketon.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import kz.ticketon.Cities;
-import kz.ticketon.Languages;
-import kz.ticketon.MainMenuButtonsMainPage;
-import kz.ticketon.SleepUtils;
+import kz.ticketon.*;
 import kz.ticketon.pages.children.ChapterChildrenPage;
 import kz.ticketon.pages.christmas_event.ChapterChristmasEventPage;
 import kz.ticketon.pages.cinema.ChapterCinemaPage;
@@ -95,78 +92,27 @@ public class BaseTemlatePage {
                 "//a[@class='NavigationItem_navigationLink__cSZrB' and contains(text(),'%s')] ",
                 getMainMenuButtonName(mainMenuButton)
         )).click();
-        ChapterPage chapterPage;
-        switch (mainMenuButton) {
-            case CINEMA:
-                chapterPage = new ChapterCinemaPage(city, language);
-                break;
-            case THEATRES:
-                chapterPage = new ChapterTheatresPage(city, language);
-                break;
-            case CONCERTS:
-                chapterPage = new ChapterConcertsPage(city, language);
-                break;
-            case SPORT:
-                chapterPage = new ChapterSportsPage(city, language);
-                break;
-            case CHILDREN:
-                chapterPage = new ChapterChildrenPage(city, language);
-                break;
-            case CHRISTMAS_EVENT:
-                chapterPage = new ChapterChristmasEventPage(city, language);
-                break;
-            case MASTER_CLASSES:
-                chapterPage = new ChapterMasterClassesPage(city, language);
-                break;
-            case MUSEUMS:
-                chapterPage = new ChapterMuseumsPage(city, language);
-                break;
-            case ENTERTAIMENT:
-                chapterPage = new ChapterEntertainmentPage(city, language);
-                break;
-            default:
-                chapterPage = new ChapterPageTours(city, language);
-                break;
-        }
-        return chapterPage;
+        return switch (mainMenuButton) {
+            case CINEMA -> new ChapterCinemaPage(city, language);
+            case THEATRES -> new ChapterTheatresPage(city, language);
+            case CONCERTS -> new ChapterConcertsPage(city, language);
+            case SPORT -> new ChapterSportsPage(city, language);
+            case CHILDREN -> new ChapterChildrenPage(city, language);
+            case CHRISTMAS_EVENT -> new ChapterChristmasEventPage(city, language);
+            case MASTER_CLASSES -> new ChapterMasterClassesPage(city, language);
+            case MUSEUMS -> new ChapterMuseumsPage(city, language);
+            case ENTERTAIMENT -> new ChapterEntertainmentPage(city, language);
+            default -> new ChapterPageTours(city, language);
+        };
     }
 
     @Step("Имя города на языке страницы")
     public String getCityName(Cities city) {
-        String cityName;
-        switch (language) {
-            case ENG: {
-                cityName = city.getTitleEn();
-                break;
-            }
-            case KZ: {
-                cityName = city.getTitleKz();
-                break;
-            }
-            default: {
-                cityName = city.getTitleRu();
-                break;
-            }
-        }
-        return cityName;
+        return NamedUtils.getCityNameByLanguage(city, language);
     }
 
     protected String getMainMenuButtonName(MainMenuButtonsMainPage MainMenuButton) {
-        String cityName;
-        switch (language) {
-            case ENG: {
-                cityName = MainMenuButton.getButtonNameEn();
-                break;
-            }
-            case KZ: {
-                cityName = MainMenuButton.getButtonNameKz();
-                break;
-            }
-            default: {
-                cityName = MainMenuButton.getButtonNameRu();
-                break;
-            }
-        }
-        return cityName;
+        return NamedUtils.getMainMenuButtonNameByLanguage(MainMenuButton, language);
+
     }
 }
