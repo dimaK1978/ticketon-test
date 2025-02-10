@@ -11,15 +11,15 @@ import org.junit.jupiter.api.Test;
 
 @Feature("Работоспособность основных элемнтов главной страницы")
 public class CheckSearchEventsTest extends BaseClassWebTest {
-//    @Test()
-//    @Story("Проверка элемента поиска событий")
-//    public void CheckSearchEvents() {
-//        SoftAssertions softAssertions = new SoftAssertions();
-//        MainPage mainPage = new MainPage(Cities.NO_CITY, Languages.RUS);
-//        mainPage.openPage();
-//        String eventStringTitle = mainPage.getEventTitle();
-//        checkSearchEventsByTitle(mainPage, eventStringTitle, softAssertions);
-//        softAssertions.assertAll();
-//    }
+    @Test()
+    @Story("Проверка элемента поиска событий")
+    public void CheckSearchEvents() {
+        SoftAssertions softAssertions = new SoftAssertions();
+        MainPage mainPage = new MainPage(Cities.NO_CITY, Languages.RUS);
+        mainPage.openPage();
+        String eventStringTitle = mainPage.getEventTitle();
+        checkSearchEventsByTitle(mainPage, eventStringTitle, softAssertions);
+        softAssertions.assertAll();
+    }
 }
 
