@@ -1,6 +1,7 @@
 package kz.ticketon.pages;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.qameta.allure.Step;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
 import org.openqa.selenium.By;
@@ -13,14 +14,19 @@ import java.time.Duration;
 public class MainScreenAppPage {
     private final AndroidDriver driver;
     private final WebDriverWait wait;
-    protected Cities city;
-    protected Languages language;
+    private Cities city;
+    private Languages language;
+    private String xpathChapterMenu = "//android.widget.TextView[@text='%s']";
 
     public MainScreenAppPage(final AndroidDriver driver, final Languages language, final Cities city) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(50));
         this.city = city;
         this.language = language;
+    }
+
+    public WebDriverWait getWait() {
+        return wait;
     }
 
     public MainScreenAppPage checkMainPage() {
@@ -39,12 +45,17 @@ public class MainScreenAppPage {
         return this;
     }
 
-    public EventsPage clickEvents() {
+    @Step("Выбор пункта меню 'События'")
+    public EventsPage clickEventsEvents() {
 
-        WebElement clickEvents = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
-                "//android.widget.TextView[@text=\"События\"]"
-        )));
-        clickEvents.click();
+        final String eventString = switch (language) {
+            case KZ -> "БАСТАУ";
+            case ENG -> "START";
+            default -> "События";
+        };
+        wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath(String.format(xpathChapterMenu, eventString))
+        )).click();
         return new EventsPage(driver);
     }
 }

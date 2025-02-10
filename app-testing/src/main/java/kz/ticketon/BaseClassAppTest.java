@@ -2,7 +2,8 @@ package kz.ticketon;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.qameta.allure.Step;
-import kz.ticketon.pages.*;
+import kz.ticketon.pages.ChooseCityPage;
+import kz.ticketon.pages.ChooseLanguagePage;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -38,19 +39,34 @@ public class BaseClassAppTest {
         }
     }
 
+    @Step("Проверка открытия экрана выбора языка, заголовок экрана по умолчанию на русском")
+    public ChooseLanguagePage checkLanguagePage(ChooseLanguagePage chooseLanguagePage) {
+        try {
+            WebElement textChooseLanguage = chooseLanguagePage.getWait().until(ExpectedConditions.elementToBeClickable(By.xpath(
+                    "//android.widget.TextView[@text='Выберите язык']"
+            )));
+        } catch (Exception e) {
+            throw new RuntimeException("Ожидаемый заголовок экрана не найден");
+        }
+        return chooseLanguagePage;
+    }
+
     @Step("Проверка открытия экрана устаноки города")
     public ChooseCityPage checkChooseCityPage(ChooseCityPage chooseCityPage) {
         final String xpathButtonChooseCity = "//android.widget.TextView[@text='%s']";
         final String titleString = switch (chooseCityPage.getLanguage()) {
-            case KZ -> "nn";
-            case ENG -> "en";
+            case KZ -> "Қаланы таңдаңыз";
+            case ENG -> "Choose city";
             default -> "Выберите город";
         };
 
-        WebElement textChooseCity = chooseCityPage.getWait().until(ExpectedConditions.elementToBeClickable(
-                By.xpath(String.format(xpathButtonChooseCity, titleString))
-        ));
-        textChooseCity.isDisplayed();
+        try {
+            WebElement textChooseCity = chooseCityPage.getWait().until(ExpectedConditions.elementToBeClickable(
+                    By.xpath(String.format(xpathButtonChooseCity, titleString))
+            ));
+        } catch (Exception e) {
+            throw new RuntimeException("Ожидаемый заголовок экрана не найден");
+        }
         return chooseCityPage;
     }
 }

@@ -4,8 +4,8 @@ import io.appium.java_client.android.AndroidDriver;
 import io.qameta.allure.Step;
 import kz.ticketon.Cities;
 import kz.ticketon.Languages;
+import kz.ticketon.NamedUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -33,20 +33,26 @@ public class ChooseCityPage {
         return language;
     }
 
-    @Step("Выбор города при открытии")
+    @Step("Выбор города при запуске приложения ")
     public MainScreenAppPage selectCity(Cities city) {
+        final String startCityString = switch (language) {
+            case KZ -> "Алматы";
+            case ENG -> "Almaty";
+            default -> "Алматы";
+        };
+
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath(String.format(xpahtAccordeonCity, "Алматы"))
+                By.xpath(String.format(xpahtAccordeonCity, startCityString))
         )).click();
 
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath(String.format(xpahtChooseCity, city))
+                By.xpath(String.format(xpahtChooseCity, NamedUtils.getCityNameByLanguage(city, language)))
         )).click();
 
         final String nameButtonString = switch (language) {
-            case KZ -> "nn";
-            case ENG -> "en";
-            default -> "ДАЛЕЕ";
+            case KZ -> "БАСТАУ";
+            case ENG -> "START";
+            default -> "НАЧАТЬ";
         };
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(

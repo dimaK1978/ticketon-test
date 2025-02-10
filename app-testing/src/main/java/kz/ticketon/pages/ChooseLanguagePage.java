@@ -22,13 +22,17 @@ public class ChooseLanguagePage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(50));
     }
 
+    public WebDriverWait getWait() {
+        return wait;
+    }
+
     @Step("Выбор языка при открытии")
     public ChooseCityPage selectLanguage(final Languages language) {
         WebElement chooselanguage = wait.until(ExpectedConditions.elementToBeClickable(By.id("android:id/text1")));
         chooselanguage.click();
         final String languageString = switch (language) {
-            case KZ -> "nn";
-            case ENG -> "en";
+            case KZ -> "Қазақ";
+            case ENG -> "English";
             default -> "Русский";
         };
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
@@ -36,8 +40,8 @@ public class ChooseLanguagePage {
         )).click();
 
         final String nameButtonString = switch (language) {
-            case KZ -> "nn";
-            case ENG -> "en";
+            case KZ -> "ӘРІ ҚАРАЙ";
+            case ENG -> "NEXT";
             default -> "ДАЛЕЕ";
         };
 

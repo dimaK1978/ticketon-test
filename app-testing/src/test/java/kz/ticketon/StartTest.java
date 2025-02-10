@@ -2,8 +2,10 @@ package kz.ticketon;
 
 import kz.ticketon.pages.ChooseCityPage;
 import kz.ticketon.pages.ChooseLanguagePage;
+import kz.ticketon.pages.MainScreenAppPage;
 import kz.ticketon.pages.MainScreenPhonePage;
 import org.junit.jupiter.api.Test;
+
 import java.net.MalformedURLException;
 
 public class StartTest extends BaseClassAppTest {
@@ -12,14 +14,16 @@ public class StartTest extends BaseClassAppTest {
     public void startTicketon() throws MalformedURLException {
        final MainScreenPhonePage mainScreenPhonePage = new MainScreenPhonePage(driver);
        final ChooseLanguagePage chooseLanguagePage = mainScreenPhonePage.clickApp();
-       final ChooseCityPage chooseCityPage = chooseLanguagePage.selectLanguage(Languages.RUS);;
-        checkChooseCityPage(chooseCityPage);
-        chooseCityPage.checkCityPage()
+        checkLanguagePage(chooseLanguagePage);
+        final ChooseCityPage chooseCityPage = chooseLanguagePage.selectLanguage(Languages.ENG);
+       final MainScreenAppPage mainScreenAppPage = chooseCityPage.selectCity(Cities.ASTANA);
+       /*  checkChooseCityPage(chooseCityPage);
+             chooseCityPage.checkCityPage()
                 .selectCity("Астана");
         mainPage.checkMainPage()
                 .clickMenu()
                 .clickEvents();
-        eventsPage.checkEvents();
+        eventsPage.checkEvents();*/
     }
 }
 //

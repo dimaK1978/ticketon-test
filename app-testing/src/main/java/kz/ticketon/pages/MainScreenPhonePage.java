@@ -2,9 +2,9 @@ package kz.ticketon.pages;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 
 public class MainScreenPhonePage {
@@ -17,8 +17,8 @@ public class MainScreenPhonePage {
     }
 
     public ChooseLanguagePage clickApp() {
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.className("android.widget.TextView")));
-        element.click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.className("android.widget.TextView")))
+                .click();
         return new ChooseLanguagePage(driver);
     }
 }
